@@ -53,6 +53,9 @@
         .toggle-track { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: #ccc; border-radius: 12px; transition: 0.3s; }
         .toggle-thumb { position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; background: #fff; border-radius: 50%; transition: 0.3s; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
         .toggle-switch input:checked + .toggle-track { background: #43a047; }
+        .toggle-switch input:checked + .toggle-track.event-track { background: #e65100; }
+        .pdf-btn { padding: 6px 16px; border: 1px solid #1565c0; border-radius: 6px; background: #e3f2fd; color: #1565c0; cursor: pointer; font-size: 0.82rem; font-weight: 600; }
+        .pdf-btn:hover { background: #bbdefb; }
         .toggle-switch input:checked ~ .toggle-thumb { left: 22px; }
         .housing-legend { display: none; gap: 12px; margin-left: 16px; padding-left: 16px; border-left: 2px solid #ddd; }
         .housing-legend.visible { display: flex; }
@@ -60,6 +63,16 @@
         .housing-legend .dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
         .spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid #ccc; border-top-color: #333; border-radius: 50%; animation: spin 0.6s linear infinite; vertical-align: middle; margin-right: 4px; }
         @keyframes spin { to { transform: rotate(360deg); } }
+        @media print {
+            body { background: #fff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .controls, .status { display: none !important; }
+            .container { padding: 10px; }
+            .card { box-shadow: none; border: 1px solid #ddd; }
+            .chart-wrap { box-shadow: none; border: 1px solid #ddd; page-break-inside: avoid; }
+            .references { box-shadow: none; border: 1px solid #ddd; page-break-inside: avoid; }
+            canvas { max-height: 350px !important; }
+        }
         @media (max-width: 600px) {
             .header { padding: 16px; }
             .header h1 { font-size: 1.1rem; }
@@ -95,7 +108,16 @@
                     <span class="toggle-thumb"></span>
                 </label>
             </div>
+            <div class="housing-toggle">
+                <span class="label" style="color:#e65100">イベント</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="eventToggle">
+                    <span class="toggle-track event-track"></span>
+                    <span class="toggle-thumb"></span>
+                </label>
+            </div>
             <button class="fetch-btn" id="fetchBtn" onclick="fetchLatest()">最新金利を取得</button>
+            <button class="pdf-btn" onclick="window.print()">PDF出力</button>
         </div>
         <div class="legend-toggles" id="legendToggles"></div>
         <div class="housing-legend" id="housingLegend">
@@ -563,6 +585,102 @@ document.getElementById('housingToggle').addEventListener('change', function() {
         }
     }
     document.getElementById('housingLegend').classList.toggle('visible', vis);
+    chart.update();
+});
+
+// ============================================================
+// 主要イベント表示
+// ============================================================
+const EVENTS = [
+    { date: '1989-12-01', label: 'バブル絶頂', color: '#e53935' },
+    { date: '1995-01-01', label: '阪神大震災', color: '#795548' },
+    { date: '1997-11-01', label: '山一・拓銀破綻', color: '#e53935' },
+    { date: '1999-02-01', label: 'ゼロ金利政策', color: '#1565c0' },
+    { date: '2001-03-01', label: '量的緩和開始', color: '#1565c0' },
+    { date: '2006-07-01', label: 'ゼロ金利解除', color: '#2e7d32' },
+    { date: '2008-09-01', label: 'リーマンショック', color: '#e53935' },
+    { date: '2011-03-01', label: '東日本大震災', color: '#795548' },
+    { date: '2013-04-01', label: '異次元緩和', color: '#1565c0' },
+    { date: '2016-02-01', label: 'マイナス金利', color: '#1565c0' },
+    { date: '2020-03-01', label: 'コロナショック', color: '#e53935' },
+    { date: '2024-03-01', label: 'マイナス金利解除', color: '#2e7d32' },
+    { date: '2025-01-01', label: '利上げ0.5%', color: '#2e7d32' },
+];
+
+const eventPlugin = {
+    id: 'eventLines',
+    _visible: false,
+    afterDraw(ch) {
+        if (!this._visible) return;
+        const ctx = ch.ctx;
+        const xScale = ch.scales.x;
+        const yScale = ch.scales.y;
+        const chartTop = yScale.top;
+        const chartBot = yScale.bottom;
+        EVENTS.forEach((ev, i) => {
+            const x = xScale.getPixelForValue(new Date(ev.date).getTime());
+            if (x < xScale.left || x > xScale.right) return;
+            // 縦の破線
+            ctx.save();
+            ctx.strokeStyle = ev.color + '35';
+            ctx.lineWidth = 1.5;
+            ctx.setLineDash([5, 4]);
+            ctx.beginPath();
+            ctx.moveTo(x, chartTop);
+            ctx.lineTo(x, chartBot);
+            ctx.stroke();
+            ctx.restore();
+            // ダイヤマーカー
+            ctx.save();
+            ctx.fillStyle = ev.color;
+            ctx.beginPath();
+            ctx.moveTo(x, chartTop - 2);
+            ctx.lineTo(x + 4, chartTop + 2);
+            ctx.lineTo(x, chartTop + 6);
+            ctx.lineTo(x - 4, chartTop + 2);
+            ctx.closePath();
+            ctx.fill();
+            ctx.restore();
+            // ピル型ラベル
+            ctx.save();
+            const labelY = chartTop + 12 + (i % 4) * 16;
+            ctx.font = 'bold 8.5px "Hiragino Sans", "Meiryo", sans-serif';
+            const textW = ctx.measureText(ev.label).width;
+            const padX = 5, padY = 3;
+            const rx = x - textW / 2 - padX;
+            const ry = labelY - 9 - padY;
+            const rw = textW + padX * 2;
+            const rh = 12 + padY * 2;
+            const r = 6;
+            ctx.fillStyle = 'rgba(255,255,255,0.92)';
+            ctx.strokeStyle = ev.color + '60';
+            ctx.lineWidth = 0.8;
+            ctx.setLineDash([]);
+            ctx.beginPath();
+            ctx.moveTo(rx + r, ry);
+            ctx.lineTo(rx + rw - r, ry);
+            ctx.quadraticCurveTo(rx + rw, ry, rx + rw, ry + r);
+            ctx.lineTo(rx + rw, ry + rh - r);
+            ctx.quadraticCurveTo(rx + rw, ry + rh, rx + rw - r, ry + rh);
+            ctx.lineTo(rx + r, ry + rh);
+            ctx.quadraticCurveTo(rx, ry + rh, rx, ry + rh - r);
+            ctx.lineTo(rx, ry + r);
+            ctx.quadraticCurveTo(rx, ry, rx + r, ry);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+            ctx.fillStyle = ev.color;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(ev.label, x, labelY - 3);
+            ctx.restore();
+        });
+    }
+};
+Chart.register(eventPlugin);
+
+document.getElementById('eventToggle').addEventListener('change', function() {
+    eventPlugin._visible = this.checked;
     chart.update();
 });
 
