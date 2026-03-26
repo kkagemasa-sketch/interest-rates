@@ -478,27 +478,36 @@ async function fetchLatest() {
 
     const results = { policy: null, short: null, jgb: null, long: null };
     const errors = [];
+    const PROXIES = [
+        url => 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(url),
+        url => 'https://api.allorigins.win/raw?url=' + encodeURIComponent(url)
+    ];
+    async function proxyFetch(url) {
+        for (const mkProxy of PROXIES) {
+            try {
+                const res = await fetch(mkProxy(url), { signal: AbortSignal.timeout(12000) });
+                if (res.ok) return await res.text();
+            } catch (_) {}
+        }
+        throw new Error('全プロキシ失敗');
+    }
 
     // 1) 無担保コールレート — 日銀時系列統計データ（月次）
     try {
         const url = 'https://www.stat-search.boj.or.jp/ssi/cgi-bin/famecgi2?cgi=$nme_r030&chkfrq=MM&rdoheader=SIMPLE&rdodelimitar=COMMA&hdnYyyyFrom=&hdnYyyyTo=&sw_freq=NONE&sw_yearend=NONE&sw_observed=NONE&hdncode=FM02%27STRECLUCON';
-        const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(url);
-        const res = await fetch(proxyUrl, { signal: AbortSignal.timeout(15000) });
-        const html = await res.text();
-        // CSVリンクを探す
+        const html = await proxyFetch(url);
         const csvMatch = html.match(/href="([^"]*\.csv[^"]*)"/i);
         if (csvMatch) {
             let csvUrl = csvMatch[1];
-            if (!csvUrl.startsWith('http')) csvUrl = 'https://www.stat-search.boj.or.jp/ssi/' + csvUrl.replace(/^\/+/,'');
-            const csvRes = await fetch('https://api.allorigins.win/raw?url=' + encodeURIComponent(csvUrl), { signal: AbortSignal.timeout(15000) });
-            const csv = await csvRes.text();
+            if (!csvUrl.startsWith('http')) csvUrl = 'https://www.stat-search.boj.or.jp' + (csvUrl.startsWith('/') ? '' : '/') + csvUrl;
+            const csv = await proxyFetch(csvUrl);
             const lines = csv.trim().split('\n').filter(l => l.trim());
             for (let i = lines.length - 1; i >= 0; i--) {
                 const parts = lines[i].split(',');
                 const dateStr = parts[0]?.trim().replace(/"/g, '');
                 const val = parseFloat(parts[1]?.trim().replace(/"/g, ''));
-                if (dateStr && !isNaN(val) && /\d{4}/.test(dateStr)) {
-                    results.policy = { date: dateStr, value: val };
+                if (dateStr && !isNaN(val) && /\d{4}[\/\-]/.test(dateStr)) {
+                    results.policy = { date: dateStr.replace(/\//g, '-'), value: val };
                     break;
                 }
             }
@@ -506,56 +515,52 @@ async function fetchLatest() {
     } catch (e) { errors.push('無担保コールレート: ' + e.message); }
 
     // 2) 短期・長期プライムレート — 日銀ページ
+    // テーブル構造: TH=日付(和暦), TD[0]=短プラ最頻値, TD[3]=長プラ, 「↓」=前回同値
     try {
         const url = 'https://www.boj.or.jp/statistics/dl/loan/prime/prime.htm';
-        const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(url);
-        const res = await fetch(proxyUrl, { signal: AbortSignal.timeout(15000) });
-        const html = await res.text();
-        // テーブルからデータをパース
+        const html = await proxyFetch(url);
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, 'text/html');
         const rows = doc.querySelectorAll('table tr');
         let lastShort = null, lastLong = null;
         rows.forEach(row => {
-            const cells = row.querySelectorAll('td');
-            if (cells.length >= 2) {
-                const dateText = cells[0]?.textContent.trim();
-                // 短プラ（最頻値は通常2列目付近）
-                for (let j = 1; j < cells.length; j++) {
-                    const val = parseFloat(cells[j]?.textContent.trim());
-                    if (!isNaN(val) && val > 0 && val < 15) {
-                        if (j <= 3 && dateText) lastShort = { date: dateText, value: val };
-                        if (j >= 4 && dateText) lastLong = { date: dateText, value: val };
-                    }
-                }
-            }
+            const th = row.querySelector('th');
+            const tds = row.querySelectorAll('td');
+            if (!th || tds.length < 4) return;
+            const dateText = th.textContent.trim().replace(/\s+/g, '');
+            // 短プラ最頻値（列1=tds[0]）
+            const sv = parseFloat(tds[0]?.textContent.trim());
+            if (!isNaN(sv) && sv > 0) lastShort = { date: dateText, value: sv };
+            // 長プラ（列5=tds[3]）
+            const lv = parseFloat(tds[3]?.textContent.trim());
+            if (!isNaN(lv) && lv > 0) lastLong = { date: dateText, value: lv };
         });
         if (lastShort) results.short = lastShort;
         if (lastLong) results.long = lastLong;
     } catch (e) { errors.push('プライムレート: ' + e.message); }
 
-    // 3) 10年物国債金利 — 財務省
+    // 3) 10年物国債金利 — 財務省（和暦形式: R8.3.25）
     try {
         const url = 'https://www.mof.go.jp/jgbs/reference/interest_rate/jgbcm.csv';
-        const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(url);
-        const res = await fetch(proxyUrl, { signal: AbortSignal.timeout(15000) });
-        const csv = await res.text();
+        const csv = await proxyFetch(url);
         const lines = csv.trim().split('\n').filter(l => l.trim());
-        // 10年は通常9列目 (1Y,2Y,3Y,4Y,5Y,6Y,7Y,8Y,9Y,10Y)
-        // ヘッダーを探して10年の列を特定
-        let col10y = -1;
-        for (let i = 0; i < Math.min(5, lines.length); i++) {
-            const headers = lines[i].split(',');
-            const idx = headers.findIndex(h => h.replace(/"/g,'').trim() === '10年' || h.replace(/"/g,'').trim() === '10');
-            if (idx >= 0) { col10y = idx; break; }
-        }
-        if (col10y === -1) col10y = 10; // デフォルト推定
+        // 10年物は11列目(index=10): 基準日,1年,2年,3年,4年,5年,6年,7年,8年,9年,10年,...
+        const col10y = 10;
         for (let i = lines.length - 1; i >= 0; i--) {
             const parts = lines[i].split(',');
             const dateStr = parts[0]?.trim().replace(/"/g, '');
             const val = parseFloat(parts[col10y]?.trim().replace(/"/g, ''));
-            if (dateStr && !isNaN(val) && /\d{4}/.test(dateStr)) {
-                results.jgb = { date: dateStr, value: val };
+            // 和暦（R,H,S）または西暦にマッチ
+            if (dateStr && !isNaN(val) && /^[RHST\d]/.test(dateStr)) {
+                // 和暦→西暦変換
+                let dispDate = dateStr;
+                const wm = dateStr.match(/^([RHST])(\d+)\.(\d+)\.(\d+)/);
+                if (wm) {
+                    const bases = {R:2018, H:1988, S:1925, T:1911};
+                    const y = bases[wm[1]] + parseInt(wm[2]);
+                    dispDate = y + '-' + wm[3].padStart(2,'0') + '-' + wm[4].padStart(2,'0');
+                }
+                results.jgb = { date: dispDate, value: val };
                 break;
             }
         }
