@@ -463,12 +463,12 @@ const chart = new Chart(ctx, {
         scales: {
             x: {
                 type: 'time',
-                time: { unit: 'year', tooltipFormat: 'yyyy-MM' },
+                time: { unit: 'month', stepSize: 6, tooltipFormat: 'yyyy-MM' },
                 title: { display: true, text: '年' }
             },
             y: {
                 title: { display: true, text: '金利 (%)' },
-                ticks: { callback: v => v + '%' }
+                ticks: { callback: v => v + '%', stepSize: 0.5 }
             }
         }
     }
@@ -698,6 +698,7 @@ async function fetchLatest() {
     const results = { policy: null, short: null, jgb: null, long: null };
     const errors = [];
     const PROXIES = [
+        url => 'https://cors.eu.org/' + url,
         url => 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(url),
         url => 'https://api.allorigins.win/raw?url=' + encodeURIComponent(url)
     ];
@@ -710,6 +711,29 @@ async function fetchLatest() {
         }
         throw new Error('全プロキシ失敗');
     }
+
+    // 0) GitHub Actionsが毎日自動保存するデータを最優先で使用（4件そろえば外部中継サービス不要）
+    try {
+        const res = await fetch('data/latest.json?t=' + Date.now(), { signal: AbortSignal.timeout(8000) });
+        if (res.ok) {
+            const j = await res.json();
+            let n = 0;
+            for (const k of ['policy', 'short', 'jgb', 'long']) {
+                if (j[k] && typeof j[k].value === 'number') {
+                    document.getElementById('v-' + k).textContent = j[k].value.toFixed(3) + '%';
+                    document.getElementById('d-' + k).textContent = '最新: ' + j[k].date;
+                    results[k] = j[k];
+                    n++;
+                }
+            }
+            if (n === 4) {
+                fetchBtn.disabled = false;
+                statusEl.className = 'status success';
+                statusEl.textContent = `4件の金利データを更新しました（自動取得データ: ${j.updated_at || '日時不明'}）`;
+                return;
+            }
+        }
+    } catch (_) {}
 
     // 1) 無担保コールレート — 日銀時系列統計データ（月次）
     try {
