@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>フォローニュース 2026年11月6日号</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@500;700&display=swap">
+<style>
+/* 紙面：一段組みの読み物。見出しは明朝、本文はゴシック。数字は等幅で揃える。 */
+:root {
+  --paper: #f5f6f4;
+  --card: #ffffff;
+  --ink: #1b2230;
+  --ink-2: #454e5c;
+  --muted: #7a838f;
+  --rule: #d8dce1;
+  --accent: #1e3a5c;
+  --accent-soft: #e6edf5;
+  --down: #2d5c9e;   /* 日本の相場慣行に合わせ、下落は青 */
+  --up: #b8442c;     /* 上昇は赤 */
+  --font-display: "Noto Serif JP", "Hiragino Mincho ProN", "Yu Mincho", serif;
+  --font-body: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #13171f; --card: #1a2029; --ink: #e9ecf1; --ink-2: #b9c1cc; --muted: #8a93a1;
+    --rule: #2b323e; --accent: #a6c1e3; --accent-soft: #1f2a3a; --down: #85aae0; --up: #e4836a;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #13171f; --card: #1a2029; --ink: #e9ecf1; --ink-2: #b9c1cc; --muted: #8a93a1;
+  --rule: #2b323e; --accent: #a6c1e3; --accent-soft: #1f2a3a; --down: #85aae0; --up: #e4836a;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.9;
+  font-feature-settings: "palt";
+  padding-block: 0 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.sheet { max-width: 720px; margin: 0 auto; }
+
+/* 題字 */
+.masthead {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap;
+  padding: 22px 0 10px;
+  border-bottom: 2px solid var(--accent);
+}
+.masthead .brand {
+  font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; letter-spacing: 0.08em; color: var(--accent);
+}
+.masthead .issue { font-size: 0.82rem; color: var(--muted); letter-spacing: 0.04em; font-variant-numeric: tabular-nums; }
+
+/* 見出し */
+.headline { padding: 28px 0 6px; }
+.headline .kicker { font-size: 0.8rem; letter-spacing: 0.12em; color: var(--accent); font-weight: 500; margin: 0 0 10px; }
+.headline h1 {
+  font-family: var(--font-display); font-weight: 700; font-size: clamp(1.55rem, 4.6vw, 2.1rem);
+  line-height: 1.45; margin: 0; text-wrap: balance; letter-spacing: 0.01em;
+}
+.headline .deck { margin: 14px 0 0; font-size: 1.02rem; color: var(--ink-2); line-height: 1.8; }
+
+.lead { margin: 22px 0 0; font-size: 1.02rem; }
+.lead::first-letter { font-weight: 500; }
+
+/* 要点 */
+.points {
+  margin: 28px 0 0; padding: 20px 22px; background: var(--card); border: 1px solid var(--rule);
+}
+.points h2 { margin: 0 0 10px; }
+.points ol { margin: 0; padding: 0; list-style: none; counter-reset: pt; display: grid; gap: 10px; }
+.points li { position: relative; padding-left: 2.2em; counter-increment: pt; }
+.points li::before {
+  content: counter(pt); position: absolute; left: 0; top: 0.35em;
+  width: 1.5em; height: 1.5em; border-radius: 50%; background: var(--accent); color: var(--paper);
+  font-size: 0.78rem; font-weight: 700; display: grid; place-items: center; line-height: 1;
+}
+.points li b { font-weight: 700; }
+
+/* 数字タイル */
+.figures { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--rule); border: 1px solid var(--rule); margin: 28px 0 0; }
+.figures .tile { background: var(--card); padding: 16px 18px 14px; min-width: 0; }
+.figures .label { font-size: 0.78rem; color: var(--muted); letter-spacing: 0.04em; margin: 0; }
+.figures .value { font-family: var(--font-display); font-size: 1.7rem; font-weight: 700; line-height: 1.2; margin: 6px 0 4px; color: var(--down); font-variant-numeric: tabular-nums; }
+.figures .value small { font-size: 0.95rem; font-weight: 500; margin-left: 2px; }
+.figures .note { font-size: 0.76rem; color: var(--muted); margin: 0; line-height: 1.5; }
+
+/* 本文の章 */
+h2 {
+  font-family: var(--font-display); font-weight: 700; font-size: 1.22rem; line-height: 1.5;
+  margin: 40px 0 12px; padding-left: 12px; border-left: 4px solid var(--accent); text-wrap: balance;
+}
+p { margin: 0 0 14px; }
+.sheet ul { margin: 0 0 14px; padding-left: 1.3em; }
+.sheet ul li { margin: 0 0 6px; }
+.sheet ul li::marker { color: var(--accent); }
+em { font-style: normal; font-weight: 700; background: linear-gradient(transparent 62%, var(--accent-soft) 62%); }
+
+/* 横棒グラフ */
+.chart { margin: 18px 0 0; padding: 18px 20px 14px; background: var(--card); border: 1px solid var(--rule); }
+.chart .title { font-weight: 700; margin: 0 0 2px; font-size: 0.98rem; }
+.chart .sub { font-size: 0.78rem; color: var(--muted); margin: 0 0 14px; }
+.chart .rows { display: grid; gap: 9px; }
+.chart .row { display: grid; grid-template-columns: minmax(8.5em, 11em) 1fr 4.2em; align-items: center; gap: 10px; min-width: 0; }
+.chart .name { font-size: 0.86rem; color: var(--ink-2); line-height: 1.35; }
+.chart .name span { display: block; font-size: 0.72rem; color: var(--muted); }
+.chart .track { position: relative; height: 14px; background: transparent; border-left: 1px solid var(--rule); }
+.chart .bar { position: absolute; top: 0; left: 0; height: 100%; width: var(--w); background: var(--down); border-radius: 0 4px 4px 0; }
+.chart .bar.jp { background: repeating-linear-gradient(135deg, var(--down) 0 3px, transparent 3px 6px); border: 1px solid var(--down); }
+.chart .val { font-size: 0.9rem; font-weight: 700; color: var(--ink); text-align: right; font-variant-numeric: tabular-nums; }
+.chart .legend { margin: 14px 0 0; font-size: 0.74rem; color: var(--muted); display: flex; gap: 16px; flex-wrap: wrap; }
+.chart .legend i { display: inline-block; width: 18px; height: 9px; vertical-align: middle; margin-right: 5px; background: var(--down); border-radius: 2px; }
+.chart .legend i.jp { background: repeating-linear-gradient(135deg, var(--down) 0 3px, transparent 3px 6px); border: 1px solid var(--down); }
+
+/* 小さな表 */
+table { width: 100%; border-collapse: collapse; font-size: 0.9rem; margin: 6px 0 14px; }
+th, td { padding: 8px 6px; border-bottom: 1px solid var(--rule); text-align: left; vertical-align: top; }
+th { font-weight: 500; color: var(--muted); font-size: 0.78rem; letter-spacing: 0.04em; }
+td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+td .dn { color: var(--down); font-weight: 700; }
+td .upc { color: var(--up); font-weight: 700; }
+.tablewrap { overflow-x: auto; }
+
+/* お客様へ */
+.advice { margin: 40px 0 0; padding: 22px 24px 8px; background: var(--accent-soft); border-top: 3px solid var(--accent); }
+.advice h2 { margin-top: 0; border: 0; padding-left: 0; }
+.advice dl { margin: 0; }
+.advice dt { font-weight: 700; margin: 14px 0 2px; }
+.advice dd { margin: 0 0 12px; color: var(--ink-2); }
+
+/* 注目点 */
+.watch { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.watch li { display: grid; grid-template-columns: 6.2em 1fr; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--rule); min-width: 0; }
+.watch .when { font-size: 0.82rem; color: var(--accent); font-weight: 700; font-variant-numeric: tabular-nums; }
+
+/* 奥付 */
+.colophon { margin: 44px 0 0; padding-top: 16px; border-top: 2px solid var(--accent); font-size: 0.78rem; color: var(--muted); line-height: 1.7; }
+.colophon h3 { font-size: 0.8rem; margin: 0 0 6px; color: var(--ink-2); font-weight: 700; }
+.colophon ul { margin: 0 0 12px; padding-left: 1.2em; }
+.colophon a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; overflow-wrap: anywhere; }
+.colophon a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.colophon .disc { margin: 0; }
+
+@media (max-width: 600px) {
+  body { font-size: 15.5px; }
+  .figures { grid-template-columns: 1fr; }
+  .chart .row { grid-template-columns: 7.5em 1fr 3.8em; gap: 8px; }
+  .watch li { grid-template-columns: 1fr; gap: 2px; }
+  .advice { padding: 18px 18px 6px; }
+  .points { padding: 16px 16px; }
+}
+@media print {
+  body { background: #fff; color: #000; padding: 0; font-size: 11pt; }
+  .sheet { max-width: none; }
+  .points, .figures, .chart, .advice { break-inside: avoid; }
+  .colophon a { text-decoration: none; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <header class="masthead">
+    <div class="brand">お客様向け フォローニュース</div>
+    <div class="issue">2026年11月6日号</div>
+  </header>
+
+  <div class="headline">
+    <p class="kicker">米国市場 ｜ 速報</p>
+    <h1>米ハイテク株が急落、ナスダックは一時5.7%安</h1>
+    <p class="deck">中間選挙の結果を受けて半導体・AI関連に売りが集中しました。日経平均先物も節目の6万円を割り込んでいます。</p>
+  </div>
+
+  <p class="lead">日本時間11月6日未明、米国の株式市場で主要な株価指数がそろって大きく下げました。日本経済新聞（11月6日0時25分配信）によると、ハイテク株の比率が高いナスダック総合指数は一時、前日比5.7%安まで下落し、NYダウも一時1,700ドル安となりました。半導体や人工知能（AI）関連の銘柄に売りが集まり、前日4日には強弱が分かれていたテクノロジー株が全面安となった格好です。</p>
+
+  <section class="points">
+    <h2>まず押さえていただきたい3点</h2>
+    <ol>
+      <li><b>下げの中心は半導体・AI関連です。</b>市場全体が崩れたというより、この1年の上昇をけん引してきた銘柄群に売りが集中しました。</li>
+      <li><b>きっかけは米中間選挙です。</b>民主党が上下両院で多数派を取り戻し、データセンター建設の規制や税優遇の見直しが警戒されています。</li>
+      <li><b>日本株にも波及しています。</b>5日の日経平均は4日続落、終値は61,077円。夜間の先物はさらに下げ、6万円を割り込みました。</li>
+    </ol>
+  </section>
+
+  <div class="figures">
+    <div class="tile">
+      <p class="label">ナスダック総合（一時）</p>
+      <p class="value">−5.7<small>%</small></p>
+      <p class="note">10月の最高値から10%超下落し、調整局面入り</p>
+    </div>
+    <div class="tile">
+      <p class="label">NYダウ（一時）</p>
+      <p class="value">−1,700<small>ドル</small></p>
+      <p class="note">前日の1,569ドル高を打ち消す下げ</p>
+    </div>
+    <div class="tile">
+      <p class="label">日経平均先物 12月物（CME）</p>
+      <p class="value">6万円割れ</p>
+      <p class="note">一時5万8,000円台半ばまで下落</p>
+    </div>
+  </div>
+
+  <h2>何が起きたのか</h2>
+  <p>前日の4日は、中間選挙という大きな節目を通過した安心感からNYダウが1,569ドル高（終値53,356ドル）と大きく反発していました。ただしその日も半導体株は売られており、上がる銘柄と下がる銘柄がはっきり分かれていました。5日はその「下がる側」が市場全体に広がり、ハイテク株が総崩れとなりました。</p>
+  <p>とくに下げが厳しかったのは半導体です。フィラデルフィア半導体株指数（SOX）は10%前後の下落となり、4月中旬以来の安値水準まで下げました。エヌビディアは一時8%を超える下落、日経の記事でも半導体大手AMD（アドバンスト・マイクロ・デバイセズ）が売られた場面に触れています。AIサーバー大手のデルは13%近く、テスラとスペースXも10%近い下げとなりました。</p>
+
+  <div class="chart" role="img" aria-label="11月5日の主な株価指数の下落率。フィラデルフィア半導体指数が約10%安、ナスダック100が約6%安、ナスダック総合が一時5.7%安、S&P500が約3.9%安、NYダウが約3.2%安、日経平均が1.79%安。">
+    <p class="title">主な株価指数の下落率（11月5日）</p>
+    <p class="sub">米国分は取引時間中の速報値です。終値は確定後に変わる可能性があります。</p>
+    <div class="rows">
+      <div class="row"><div class="name">フィラデルフィア<br>半導体株指数<span>米国・速報</span></div><div class="track"><div class="bar" style="--w:100%"></div></div><div class="val">−10.0%</div></div>
+      <div class="row"><div class="name">ナスダック100<span>米国・速報</span></div><div class="track"><div class="bar" style="--w:60%"></div></div><div class="val">−6.0%</div></div>
+      <div class="row"><div class="name">ナスダック総合<span>米国・一時</span></div><div class="track"><div class="bar" style="--w:57%"></div></div><div class="val">−5.7%</div></div>
+      <div class="row"><div class="name">S&amp;P500<span>米国・速報</span></div><div class="track"><div class="bar" style="--w:39%"></div></div><div class="val">−3.9%</div></div>
+      <div class="row"><div class="name">NYダウ<span>米国・一時1,700ドル安</span></div><div class="track"><div class="bar" style="--w:32%"></div></div><div class="val">−3.2%</div></div>
+      <div class="row"><div class="name">日経平均<span>日本・5日終値</span></div><div class="track"><div class="bar jp" style="--w:18%"></div></div><div class="val">−1.8%</div></div>
+    </div>
+    <p class="legend"><span><i></i>米国（速報値・概算）</span><span><i class="jp"></i>日本（終値）</span></p>
+  </div>
+
+  <h2>なぜ売られたのか</h2>
+  <p>直接のきっかけは、11月3日に行われた米国の中間選挙です。民主党が上院・下院の両方で多数派を奪還し、トランプ政権は残る2年を「ねじれ議会」で運営することになりました。</p>
+  <p>市場が気にしているのは、<em>AIの土台であるデータセンター建設にブレーキがかかること</em>です。背景には次のような材料があります。</p>
+  <ul>
+    <li>テキサス州知事選で当選した民主党候補が、データセンターの新規建設の一時停止と税優遇の廃止を公約に掲げていた。同州はグーグル、メタ、オラクル、オープンAIなどが大型投資を進める拠点です。</li>
+    <li>各地の住民投票で、データセンター建設を制限する提案が相次いで可決された。</li>
+    <li>民主党主導の議会のもとで、大手テック企業への規制や税制、独占禁止法の審査が厳しくなるとの見方。</li>
+  </ul>
+  <p>もともとAI関連株には「投資額が大きすぎる」「資金調達が続くのか」といった不安がくすぶっていました。そこに政策面のリスクが重なり、利益確定の売りが一気に出た形です。なお、懸念の矛先はAI技術そのものではなく、データセンターの建設や税制に向いている点は押さえておきたいところです。</p>
+
+  <h2>日本市場への影響</h2>
+  <p>5日の東京市場は、米国の半導体株安を受けて日経平均が終値61,077円90銭（前日比1,110円73銭安、1.79%安）と4日続落し、5月20日以来、約5カ月半ぶりの安値水準となりました。アドバンテスト1銘柄で約1,100円、東京エレクトロンで約460円、指数を押し下げています。</p>
+  <p>一方で、市場全体が売られたわけではありません。東証株価指数（TOPIX）は反発し、33業種のうち25業種が上昇しました。トヨタ自動車が業績見通しを引き上げたことで自動車株は買われています。<em>下げているのは半導体・AI関連に絞られている</em>、というのが現時点の姿です。</p>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>指標</th><th>水準</th><th style="text-align:right">前日比</th></tr></thead>
+    <tbody>
+      <tr><td>日経平均（5日終値）</td><td class="num">61,077.90円</td><td class="num"><span class="dn">−1,110.73円</span></td></tr>
+      <tr><td>TOPIX（5日終値）</td><td class="num">約3,940</td><td class="num"><span class="upc">＋約45</span></td></tr>
+      <tr><td>日経平均先物 12月物（CME、夜間）</td><td class="num">一時5万8,000円台半ば</td><td class="num"><span class="dn">6万円割れ</span></td></tr>
+      <tr><td>ドル円</td><td class="num">1ドル＝157円台後半</td><td class="num">やや円高</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>夜間の先物が6万円を大きく割り込んでいることから、6日の東京市場は安く始まる可能性が高いとみています。</p>
+
+  <section class="advice">
+    <h2>お客様へのポイント</h2>
+    <dl>
+      <dt>積立投資をされている方</dt>
+      <dd>価格が下がった局面は、同じ金額でより多くの口数を買える時期です。積立の停止や解約は、その後の回復の恩恵を受け損ねる原因になりやすいため、これまで通り続けていただくことをおすすめします。</dd>
+      <dt>全世界株式型・S&amp;P500型の投資信託をお持ちの方</dt>
+      <dd>基準価額は米国株の下落をある程度反映します。ただし幅広い銘柄に分散されており、半導体の個別株ほどの値下がりにはなりません。慌てて動く必要はありません。</dd>
+      <dt>米国ハイテク株・半導体株に集中した商品をお持ちの方</dt>
+      <dd>今回の下落を直接受けています。資産全体に占める割合が大きい場合は、配分を見直す機会でもあります。一度ご相談ください。</dd>
+      <dt>住宅ローンをご検討中・お借入中の方</dt>
+      <dd>株が売られる局面では安全資産の国債が買われ、長期金利は下がりやすくなります。10年国債利回りは11月4日時点で2.855%でした。固定金利の見直しを考えている方は、今後数週間の動きに注目です。</dd>
+    </dl>
+  </section>
+
+  <h2>今後の注目点</h2>
+  <ul class="watch">
+    <li><span class="when">11月6日</span><span>東京市場の反応。先物が示す水準まで下げるか、押し目買いが入るか。米国市場の終値もこの日の朝に確定します。</span></li>
+    <li><span class="when">11月中旬</span><span>エヌビディアの決算。AI投資が続いているかを示す最大の試金石で、相場の方向を左右します。</span></li>
+    <li><span class="when">12月9日</span><span>米FOMC（連邦公開市場委員会）。これまで追加利上げの観測が強まっていましたが、株安が続けば見方が変わる可能性があります。</span></li>
+    <li><span class="when">随時</span><span>民主党が示すデータセンター規制の具体策。懸念が「公約」の段階にとどまるのか、法案として動き出すのかで市場の受け止めは変わります。</span></li>
+  </ul>
+  <p style="margin-top:18px">相場が大きく動いたときほど、判断を急がないことが大切です。ご不安な点があれば、いつでもご連絡ください。</p>
+
+  <footer class="colophon">
+    <h3>出典</h3>
+    <ul>
+      <li>日本経済新聞「米ナスダック一時5%急落、ハイテク株総崩れ　NYダウも1700ドル安」2026年11月6日 0:25配信 <a href="https://www.nikkei.com/article/DGXZQOGN05C660V01C26A1000000/">nikkei.com</a>（有料記事）</li>
+      <li>日本経済新聞「日経平均先物が急落、6万円割れ　米半導体株安が波及」2026年11月6日 0:31配信 <a href="https://www.nikkei.com/article/DGXZQOGN05C720V01C26A1000000/">nikkei.com</a>（有料記事）</li>
+      <li>読売新聞、株探、CNN、CNBC、Yahoo Finance、JETRO の11月5日付報道（米国市場の個別銘柄・指数の動き、中間選挙の結果と政策の見方）</li>
+    </ul>
+    <p class="disc">本資料は情報提供を目的として作成したもので、特定の金融商品の売買を勧誘するものではありません。米国市場の数値は取引時間中の速報値を含み、確定値とは異なる場合があります。投資の最終判断はご自身でお願いいたします。</p>
+  </footer>
+
+</div>
+</body>
+</html>
