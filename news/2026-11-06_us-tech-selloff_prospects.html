@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>マーケットレター 2026年11月6日号</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@500;700&display=swap">
+<style>
+/* 紙面：一段組みの読み物。見出しは明朝、本文はゴシック。数字は等幅で揃える。図版はすべてインラインSVG/CSS。 */
+:root {
+  --paper: #f5f6f4;
+  --card: #ffffff;
+  --ink: #1b2230;
+  --ink-2: #454e5c;
+  --muted: #7a838f;
+  --rule: #d8dce1;
+  --accent: #1e3a5c;
+  --accent-soft: #e6edf5;
+  --down: #2d5c9e;   /* 日本の相場慣行に合わせ、下落は青 */
+  --up: #b8442c;     /* 上昇は赤 */
+  --font-display: "Noto Serif JP", "Hiragino Mincho ProN", "Yu Mincho", serif;
+  --font-body: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #13171f; --card: #1a2029; --ink: #e9ecf1; --ink-2: #b9c1cc; --muted: #8a93a1;
+    --rule: #2b323e; --accent: #a6c1e3; --accent-soft: #1f2a3a; --down: #85aae0; --up: #e4836a;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #13171f; --card: #1a2029; --ink: #e9ecf1; --ink-2: #b9c1cc; --muted: #8a93a1;
+  --rule: #2b323e; --accent: #a6c1e3; --accent-soft: #1f2a3a; --down: #85aae0; --up: #e4836a;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16.5px;
+  line-height: 1.95;
+  font-feature-settings: "palt";
+  padding-block: 0 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.sheet { max-width: 720px; margin: 0 auto; }
+svg { max-width: 100%; height: auto; display: block; }
+svg text { font-family: var(--font-body); fill: var(--ink-2); }
+
+/* 題字 */
+.masthead {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap;
+  padding: 22px 0 10px;
+  border-bottom: 2px solid var(--accent);
+}
+.masthead .brand { font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; letter-spacing: 0.08em; color: var(--accent); }
+.masthead .issue { font-size: 0.82rem; color: var(--muted); letter-spacing: 0.04em; font-variant-numeric: tabular-nums; }
+
+/* 見出し */
+.headline { padding: 28px 0 6px; }
+.headline .kicker { font-size: 0.8rem; letter-spacing: 0.12em; color: var(--accent); font-weight: 500; margin: 0 0 10px; }
+.headline h1 {
+  font-family: var(--font-display); font-weight: 700; font-size: clamp(1.55rem, 4.6vw, 2.1rem);
+  line-height: 1.45; margin: 0; text-wrap: balance; letter-spacing: 0.01em;
+}
+.headline .deck { margin: 14px 0 0; font-size: 1.02rem; color: var(--ink-2); line-height: 1.8; }
+.lead { margin: 22px 0 0; font-size: 1.02rem; }
+
+/* 要点（ここだけで完結） */
+.brief { margin: 24px 0 0; padding: 22px 24px 18px; background: var(--card); border: 2px solid var(--accent); }
+.brief h2 { margin: 0 0 12px; border: 0; padding: 0; font-size: 1.15rem; }
+.brief dl { margin: 0; display: grid; gap: 10px; }
+.brief .row { display: grid; grid-template-columns: 7.5em 1fr; gap: 12px; align-items: start; min-width: 0; }
+.brief dt { font-weight: 700; color: var(--accent); font-size: 0.92rem; padding-top: 0.15em; }
+.brief dd { margin: 0; }
+.brief .verdict { margin: 16px 0 0; padding: 12px 16px; background: var(--accent-soft); font-weight: 700; line-height: 1.8; }
+.brief .stance-line { margin: 12px 0 0; font-size: 0.92rem; color: var(--ink-2); }
+.brief h2 + .stance-line { margin: 0 0 12px; }
+.brief .close { margin: 10px 0 0; font-size: 0.92rem; color: var(--ink-2); }
+.brief .close .ph { font-weight: 700; }
+/* 続きを読む */
+.gate { margin: 28px 0 0; padding: 22px 20px; text-align: center; border-top: 1px dashed var(--rule); border-bottom: 1px dashed var(--rule); }
+.gate p { margin: 0 0 10px; color: var(--ink-2); font-size: 0.95rem; }
+.gate .sub { font-size: 0.8rem; color: var(--muted); margin: 8px 0 0; }
+.gate button { font: inherit; font-weight: 700; font-size: 0.98rem; padding: 12px 26px; border: 2px solid var(--accent); background: var(--accent); color: var(--paper); border-radius: 999px; cursor: pointer; }
+.gate button:hover { background: var(--accent-soft); color: var(--accent); }
+.gate button:focus-visible { outline: 3px solid var(--accent-soft); outline-offset: 2px; }
+.more-head { margin: 32px 0 0; font-size: 0.8rem; letter-spacing: 0.12em; color: var(--muted); text-align: center; }
+/* スタンス */
+.stance { margin: 26px 0 0; padding: 20px 22px; background: var(--card); border: 1px solid var(--rule); border-left: 4px solid var(--accent); }
+.stance h2 { margin: 0 0 8px; border: 0; padding: 0; font-size: 1.1rem; }
+.stance p { margin: 0 0 8px; color: var(--ink-2); }
+.stance p:last-child { margin: 0; }
+.stance p strong { color: var(--ink); font-weight: 700; }
+
+/* 要点 */
+.points { margin: 28px 0 0; padding: 20px 22px; background: var(--card); border: 1px solid var(--rule); }
+.points h2 { margin: 0 0 10px; }
+.points ol { margin: 0; padding: 0; list-style: none; counter-reset: pt; display: grid; gap: 12px; }
+.points li { position: relative; padding-left: 2.2em; counter-increment: pt; }
+.points li::before {
+  content: counter(pt); position: absolute; left: 0; top: 0.4em;
+  width: 1.5em; height: 1.5em; border-radius: 50%; background: var(--accent); color: var(--paper);
+  font-size: 0.78rem; font-weight: 700; display: grid; place-items: center; line-height: 1;
+}
+.points li b { font-weight: 700; display: block; }
+
+/* 数字タイル */
+.figures { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--rule); border: 1px solid var(--rule); margin: 28px 0 0; }
+.figures .tile { background: var(--card); padding: 16px 18px 14px; min-width: 0; }
+.figures .label { font-size: 0.8rem; color: var(--ink-2); font-weight: 500; margin: 0; }
+.figures .value { font-family: var(--font-display); font-size: 1.7rem; font-weight: 700; line-height: 1.2; margin: 6px 0 4px; color: var(--down); font-variant-numeric: tabular-nums; }
+.figures .value small { font-size: 0.95rem; font-weight: 500; margin-left: 2px; }
+.figures .note { font-size: 0.78rem; color: var(--muted); margin: 0; line-height: 1.55; }
+
+/* 本文の章 */
+h2 {
+  font-family: var(--font-display); font-weight: 700; font-size: 1.25rem; line-height: 1.5;
+  margin: 42px 0 12px; padding-left: 12px; border-left: 4px solid var(--accent); text-wrap: balance;
+}
+p { margin: 0 0 14px; }
+.sheet ul { margin: 0 0 14px; padding-left: 1.3em; }
+.sheet ul li { margin: 0 0 8px; }
+.sheet ul li::marker { color: var(--accent); }
+em { font-style: normal; font-weight: 700; background: linear-gradient(transparent 62%, var(--accent-soft) 62%); }
+
+.hint { margin: 0 0 16px; padding: 12px 16px; background: var(--card); border-left: 3px solid var(--rule); font-size: 0.9rem; color: var(--ink-2); line-height: 1.8; }
+.hint b { color: var(--accent); }
+
+/* 図版の共通枠 */
+.figure { margin: 16px 0 18px; padding: 18px 20px 14px; background: var(--card); border: 1px solid var(--rule); }
+.figure .title { font-weight: 700; margin: 0 0 2px; font-size: 0.98rem; }
+.figure .sub { font-size: 0.8rem; color: var(--muted); margin: 0 0 12px; line-height: 1.6; }
+.figure .cap { font-size: 0.8rem; color: var(--muted); margin: 10px 0 0; line-height: 1.6; }
+
+/* 流れ図（原因→結果） */
+.flow { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: stretch; gap: 8px; margin: 10px 0 18px; }
+.flow .step { background: var(--card); border: 1px solid var(--rule); padding: 14px 14px 12px; font-size: 0.9rem; line-height: 1.65; min-width: 0; }
+.flow .step svg { width: 36px; height: 36px; margin-bottom: 8px; }
+.flow .step b { display: block; color: var(--accent); font-size: 0.78rem; letter-spacing: 0.06em; margin-bottom: 4px; }
+.flow .arrow { align-self: center; color: var(--muted); font-size: 1.2rem; }
+.icon { fill: none; stroke: var(--accent); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+/* 横棒グラフ */
+.chart .rows { display: grid; gap: 9px; }
+.chart .row { display: grid; grid-template-columns: minmax(8.5em, 11em) 1fr 4.2em; align-items: center; gap: 10px; min-width: 0; }
+.chart .name { font-size: 0.86rem; color: var(--ink-2); line-height: 1.35; }
+.chart .name span { display: block; font-size: 0.72rem; color: var(--muted); }
+.chart .track { position: relative; height: 14px; border-left: 1px solid var(--rule); }
+.chart .bar { position: absolute; top: 0; left: 0; height: 100%; width: var(--w); background: var(--down); border-radius: 0 4px 4px 0; }
+.chart .bar.jp { background: repeating-linear-gradient(135deg, var(--down) 0 3px, transparent 3px 6px); border: 1px solid var(--down); }
+.chart .val { font-size: 0.9rem; font-weight: 700; color: var(--ink); text-align: right; font-variant-numeric: tabular-nums; }
+.legend { margin: 14px 0 0; font-size: 0.76rem; color: var(--muted); display: flex; gap: 16px; flex-wrap: wrap; }
+.legend i { display: inline-block; width: 18px; height: 9px; vertical-align: middle; margin-right: 5px; background: var(--down); border-radius: 2px; }
+.legend i.jp { background: repeating-linear-gradient(135deg, var(--down) 0 3px, transparent 3px 6px); border: 1px solid var(--down); }
+.legend i.up { background: var(--up); }
+
+/* 業種のワッフル */
+.waffle { display: grid; grid-template-columns: repeat(11, 1fr); gap: 5px; max-width: 420px; }
+.waffle span { aspect-ratio: 1; border-radius: 3px; background: var(--up); max-width: 100%; }
+.waffle span.dn { background: var(--down); }
+.waffle-wrap { display: grid; grid-template-columns: 1fr auto; gap: 18px; align-items: center; }
+.waffle-num { font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; line-height: 1.2; font-variant-numeric: tabular-nums; }
+.waffle-num span { display: block; font-family: var(--font-body); font-size: 0.78rem; font-weight: 500; color: var(--muted); }
+.waffle-num.upc { color: var(--up); }
+.waffle-num.dnc { color: var(--down); }
+.waffle-nums { display: grid; gap: 10px; }
+
+/* よくあるご質問 */
+.faq { margin: 42px 0 0; padding: 22px 24px 10px; background: var(--accent-soft); border-top: 3px solid var(--accent); }
+.faq h2 { margin-top: 0; border: 0; padding-left: 0; }
+.faq .qa { display: grid; gap: 18px; }
+.faq .q { font-weight: 700; margin: 0; padding-left: 2em; position: relative; line-height: 1.7; }
+.faq .q::before, .faq .a::before { position: absolute; left: 0; top: 0; font-family: var(--font-display); font-weight: 700; color: var(--accent); }
+.faq .q::before { content: "Q"; }
+.faq .a { margin: 4px 0 0; padding-left: 2em; position: relative; color: var(--ink-2); }
+.faq .a::before { content: "A"; }
+.faq .a b { color: var(--ink); }
+.faq .check { margin: 8px 0 8px 2em; padding: 0; list-style: none; display: grid; gap: 6px; }
+.faq .check li { position: relative; padding-left: 1.8em; color: var(--ink-2); font-size: 0.95rem; line-height: 1.7; }
+.faq .check li::before { content: ""; position: absolute; left: 0; top: 0.45em; width: 0.95em; height: 0.95em; border: 1.5px solid var(--accent); border-radius: 3px; background: var(--card); }
+.faq .a.check-note { padding-left: 2em; }
+.faq .a.check-note::before { content: none; }
+
+/* 用語 */
+.glossary { margin: 42px 0 0; border: 1px solid var(--rule); background: var(--card); padding: 18px 22px 8px; }
+.glossary h2 { margin-top: 0; border: 0; padding-left: 0; font-size: 1.1rem; }
+.glossary dl { margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px 24px; }
+.glossary .item { padding: 8px 0 10px; border-bottom: 1px solid var(--rule); min-width: 0; }
+.glossary dt { font-weight: 700; margin: 0 0 2px; font-size: 0.95rem; }
+.glossary dd { margin: 0; font-size: 0.86rem; color: var(--ink-2); line-height: 1.7; }
+
+/* 注目点 */
+.watch { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.watch li { display: grid; grid-template-columns: 6.2em 1fr; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--rule); min-width: 0; }
+/* 書いた人・登録導線 */
+.author { margin: 36px 0 0; padding: 20px 22px; background: var(--card); border: 1px solid var(--rule); }
+.author-head { display: flex; gap: 14px; align-items: center; margin-bottom: 10px; }
+.author-mark { width: 52px; height: 52px; border-radius: 50%; background: var(--accent-soft); border: 2px solid var(--accent); flex: none; }
+.author-name { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; line-height: 1.4; }
+.author-role { margin: 0; font-size: 0.82rem; color: var(--muted); }
+.author p:last-child { margin: 0; color: var(--ink-2); font-size: 0.95rem; }
+.cta { margin: 20px 0 0; padding: 22px 24px; background: var(--accent); color: var(--paper); }
+.cta h2 { margin: 0 0 8px; border: 0; padding: 0; font-size: 1.15rem; color: var(--paper); }
+.cta p { margin: 0 0 8px; color: var(--paper); opacity: 0.92; font-size: 0.95rem; }
+.cta .cta-link { font-weight: 700; font-size: 1.05rem; opacity: 1; margin-top: 12px; }
+.cta .cta-sub { font-size: 0.85rem; margin: 10px 0 0; opacity: 0.85; }
+.cta .ph { color: var(--paper); outline-color: var(--paper); }
+/* 差し替え箇所の目印（送付前に実際の内容に置き換える） */
+.ph { outline: 1.5px dashed var(--up); outline-offset: 1px; color: var(--up); padding: 0 3px; }
+.watch .when { font-size: 0.82rem; color: var(--accent); font-weight: 700; font-variant-numeric: tabular-nums; }
+
+/* 奥付 */
+.colophon { margin: 44px 0 0; padding-top: 16px; border-top: 2px solid var(--accent); font-size: 0.78rem; color: var(--muted); line-height: 1.7; }
+.colophon h3 { font-size: 0.8rem; margin: 0 0 6px; color: var(--ink-2); font-weight: 700; }
+.colophon ul { margin: 0 0 12px; padding-left: 1.2em; }
+.colophon a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; overflow-wrap: anywhere; }
+.colophon a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.colophon .disc { margin: 0; }
+
+@media (max-width: 600px) {
+  body { font-size: 15.5px; }
+  .figures { grid-template-columns: 1fr; }
+  .chart .row { grid-template-columns: 7.5em 1fr 3.8em; gap: 8px; }
+  .flow { grid-template-columns: 1fr; }
+  .flow .arrow { transform: rotate(90deg); justify-self: center; }
+  .glossary dl { grid-template-columns: 1fr; gap: 4px; }
+  .watch li { grid-template-columns: 1fr; gap: 2px; }
+  .waffle-wrap { grid-template-columns: 1fr; }
+  .waffle-nums { grid-template-columns: 1fr 1fr; }
+  .faq { padding: 18px 18px 6px; }
+  .brief { padding: 16px 16px 14px; }
+  .brief .row { grid-template-columns: 1fr; gap: 2px; }
+  .points, .stance, .author { padding: 16px 16px; }
+  .cta { padding: 18px 18px; }
+}
+@media print {
+  #more { display: block !important; }
+  #more-gate { display: none !important; }
+  body { background: #fff; color: #000; padding: 0; font-size: 11pt; }
+  .sheet { max-width: none; }
+  .brief, .points, .figures, .figure, .faq, .glossary, .flow, .stance, .author, .cta { break-inside: avoid; }
+  .colophon a { text-decoration: none; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <header class="masthead">
+    <div class="brand">マーケットレター</div>
+    <div class="issue">2026年11月6日号</div>
+  </header>
+
+  <div class="headline">
+    <p class="kicker">アメリカの株式市場 ｜ 速報</p>
+    <h1>アメリカのハイテク株が大きく下がりました</h1>
+    <p class="deck">何が起き、資産にどう関わるのか。要点は冒頭にまとめました。背景まで知りたい方は、続きをご覧ください。</p>
+  </div>
+
+
+  <section class="brief">
+    <h2>要点</h2>
+    <p class="stance-line">ファイナンシャルプランナーの<span class="ph">［お名前］</span>と申します。</p>
+    <dl>
+      <div class="row"><dt>何が起きたか</dt><dd>アメリカで、AI・半導体関連の株が一斉に売られました。ハイテク株の多いナスダックは5.5%安（一時5.7%安）。きっかけは中間選挙で、AI向けの大型施設の建設に歯止めがかかるのではという警戒が広がりました。</dd></div>
+      <div class="row"><dt>日本への影響</dt><dd>日本株は6日が本番です。夜間の先物は5万7,400円（5.8%安）で引け、6日の東京市場は6万円を大きく割り込んで始まる見込みです。下げの中心は、ここでも半導体関連とみています。</dd></div>
+      <div class="row"><dt>どうすればよいか</dt><dd>特別な対応は必要ありません。積立はこれまで通り続けるのが得策です。価格が下がった局面は、同じ金額でより多くの口数を買える時期でもあります。</dd></div>
+    </dl>
+    <p class="verdict">結論：売り急ぐ理由はありません。積立はこれまで通りで大丈夫です。</p>
+    <p class="stance-line">相場の浮き沈みにかかわらず、長く積み立てを続けること。それが私の基本的な考えです。この便りは、不安を煽るためではなく、安心して持ち続けていただくためのものです。</p>
+    <p class="close">お忙しい方は、ここまでで十分です。次に相場が大きく動いた日にも、同じようにお届けします。登録はこちら：<span class="ph">［LINE公式アカウント または 登録ページのURL］</span></p>
+  </section>
+
+  <div class="gate" id="more-gate">
+    <p>ここから先は、背景を知りたい方へ。</p>
+    <button type="button" id="more-btn">続きを読む</button>
+    <p class="sub">背景、図解、よくあるご質問。5分ほどでお読みいただけます。</p>
+  </div>
+
+  <div id="more">
+  <p class="more-head">くわしい解説</p>
+  <p class="lead">日本時間の11月6日未明、アメリカの株式市場で株価が大きく下がりました。日本経済新聞によると、ハイテク企業が多く集まる「ナスダック」という指数は、一時5.7%安まで売られ、終値でも5.5%の下落。「NYダウ」も1,800ドル前後の下げで取引を終えました。売られたのは主に、半導体やAI（人工知能）に関わる会社の株です。</p>
+
+  <section class="stance">
+    <h2>はじめに</h2>
+    <p>ファイナンシャルプランナーの<span class="ph">［お名前］</span>と申します。この便りは、相場が大きく動いた日に、何が起きているかを落ち着いて把握していただくために書いています。</p>
+    <p><strong>相場の浮き沈みにかかわらず、長く積み立てを続けること。</strong>それが私の基本的な考えです。相場を見て売り買いを繰り返すのは、手間のわりに報われにくい方法だと思っています。</p>
+    <p>それでもこうした便りを書くのは、不安を煽るためではありません。<strong>何が起きているかを知ったうえで、安心して持ち続けていただくため</strong>です。大きな数字が報じられたとき、「あの話か」と静かに受け止めていただければ、この便りの役目は果たせています。</p>
+  </section>
+
+
+  <div class="figures">
+    <div class="tile">
+      <p class="label">ナスダック（終値）</p>
+      <p class="value">−5.5<small>%</small></p>
+      <p class="note">一時は5.7%安。100万円が約94万円になる下げ幅で、10月の最高値からは10%以上下がりました。</p>
+    </div>
+    <div class="tile">
+      <p class="label">NYダウ（終値）</p>
+      <p class="value">−1,800<small>ドル前後</small></p>
+      <p class="note">率にすると3%強。前の日に大きく上がった分を打ち消しました。</p>
+    </div>
+    <div class="tile">
+      <p class="label">日経平均先物（夜間取引の終値）</p>
+      <p class="value">57,400<small>円</small></p>
+      <p class="note">前日比3,520円安（5.8%安）。6日の東京市場の目安になる水準です。</p>
+    </div>
+  </div>
+
+  <h2>「株価指数」とは</h2>
+  <p>ニュースに出てくる「ナスダック」「NYダウ」「日経平均」は、どれも<em>たくさんの会社の株価をまとめた「平均点」</em>のようなものです。今回は、その平均点が下がりました。</p>
+  <div class="hint"><b>ナスダック</b>：アップルやエヌビディアなど、ハイテク企業が多く入っているアメリカの指数。<b>NYダウ</b>：アメリカを代表する大企業30社の指数。<b>S&amp;P500</b>：アメリカの主要500社の指数。投資信託でよく使われます。<b>日経平均</b>：日本を代表する225社の指数。</div>
+
+  <div class="figure chart" role="img" aria-label="11月5日の主な株価指数の下落率（終値）。半導体の会社の指数が約10%安、ナスダックが5.5%安、S&P500が4.4%安、NYダウが約3.4%安、日経平均先物の夜間取引が5.8%安。">
+    <p class="title">どのくらい下がったのか（11月5日の終値）</p>
+    <p class="sub">棒が長いほど大きく下がっています。アメリカは終値、日本は6日早朝に引けた先物の値です。</p>
+    <div class="rows">
+      <div class="row"><div class="name">半導体の会社の指数<span>アメリカ（SOX）</span></div><div class="track"><div class="bar" style="--w:100%"></div></div><div class="val">−10.0%</div></div>
+      <div class="row"><div class="name">ナスダック<span>アメリカ・ハイテク中心</span></div><div class="track"><div class="bar" style="--w:55%"></div></div><div class="val">−5.5%</div></div>
+      <div class="row"><div class="name">S&amp;P500<span>アメリカ・主要500社</span></div><div class="track"><div class="bar" style="--w:44%"></div></div><div class="val">−4.4%</div></div>
+      <div class="row"><div class="name">NYダウ<span>アメリカ・大企業30社</span></div><div class="track"><div class="bar" style="--w:34%"></div></div><div class="val">−3.4%</div></div>
+      <div class="row"><div class="name">日経平均先物<span>日本・夜間取引の終値</span></div><div class="track"><div class="bar jp" style="--w:58%"></div></div><div class="val">−5.8%</div></div>
+    </div>
+    <p class="legend"><span><i></i>アメリカ（終値）</span><span><i class="jp"></i>日本（先物の夜間終値）</span></p>
+  </div>
+  <p>半導体の会社ほど大きく下がり、幅広い会社を含む指数ほど下げが小さい、という関係は見てとれます。ただし、投資信託で多い「S&amp;P500型」が無傷というわけではありません。<em>S&amp;P500は上位にハイテク大手が並び、IT関連だけで全体の3割前後を占める</em>ため、この日の下落率は4.4%と、ナスダックにかなり近い水準でした。「全世界株式型」は米国が6割前後で、残りが日本や欧州などに分かれている分、下げはもう少し小さくなります。加えて為替がやや円高に振れたため、円建ての基準価額はその分だけ下げ幅が広がります。半導体の個別株のような10%の下げにはなりませんが、数%の値下がりは見込んでおく必要があります。</p>
+
+  <h2>なぜ下がったのか</h2>
+  <p>AI（人工知能）を動かすには、「データセンター」と呼ばれる巨大なコンピュータ施設が必要です。この施設を建てるために、エヌビディアなどの半導体がとぶように売れ、関連する会社の株価は大きく上がってきました。</p>
+  <p>ところが11月3日のアメリカの選挙（中間選挙）で、野党の民主党が議会の多数派になりました。民主党には、大量の電気や水を使うデータセンターの建設に慎重な考えの人が多く、たとえばテキサス州の新しい知事は「新しいデータセンターの建設を一時ストップし、税金の優遇もやめる」と公約していました。各地の住民投票でも、建設を制限する案が次々と可決されています。</p>
+  <div class="flow">
+    <div class="step">
+      <svg viewBox="0 0 36 36" aria-hidden="true" class="icon"><rect x="5" y="15" width="26" height="15" rx="2"/><path d="M12 15v-9h12v9"/><path d="M15 10h6M15 13h6"/><path d="M14 20h8"/></svg>
+      <b>選挙の結果</b>民主党が勝ち、データセンター建設に慎重な政策が進みそう
+    </div>
+    <div class="arrow">→</div>
+    <div class="step">
+      <svg viewBox="0 0 36 36" aria-hidden="true" class="icon"><rect x="6" y="8" width="24" height="22" rx="2"/><path d="M11 13h4M11 18h4M11 23h4M21 13h4M21 18h4M21 23h4"/><path d="M15 30v-4h6v4"/></svg>
+      <b>投資家の心配</b>施設が作れなければ、半導体がこれまでほど売れないのでは
+    </div>
+    <div class="arrow">→</div>
+    <div class="step">
+      <svg viewBox="0 0 36 36" aria-hidden="true" class="icon"><rect x="10" y="10" width="16" height="16" rx="2"/><rect x="14" y="14" width="8" height="8"/><path d="M13 10V6M18 10V6M23 10V6M13 30v-4M18 30v-4M23 30v-4M10 13H6M10 18H6M10 23H6M30 13h-4M30 18h-4M30 23h-4"/></svg>
+      <b>株価の反応</b>AI・半導体の会社の株がいっせいに売られた
+    </div>
+  </div>
+  <p>もう一つ、背景があります。AI関連の株はこの1年で大きく上がり、以前から「上がりすぎでは」「投資額が大きすぎるのでは」という声がありました。そこに選挙という材料が重なり、「いったん利益を確定しておこう」という売りが一気に出た、という面もあります。</p>
+  <div class="hint"><b>補足</b>：心配されているのは「AIそのものが規制される」ことではなく、「施設の建設や税金の扱い」です。AIの技術や需要がなくなったという話ではありません。</div>
+
+  <h2>日本への影響は</h2>
+  <p>日本株にとっては、6日が本番です。アメリカ市場の下落を受けて、夜間に取引される日経平均先物は5万7,400円で引けました。前日から3,520円低い水準で、下落率にすると5.8%です。先物は翌日の相場の目安になるため、6日の東京市場は節目の6万円を大きく割り込んで始まる見込みです。</p>
+
+  <div class="figure" role="img" aria-label="日経平均先物は前日の清算値60,920円から夜間取引で57,400円へ3,520円（5.8%）下落し、節目の60,000円を割り込んだ。">
+    <p class="title">先物が示す、6日の東京市場の目安</p>
+    <p class="sub">日経平均先物12月物。夜間取引は6日午前6時に終了しています。</p>
+    <svg viewBox="0 0 600 230" width="600" height="230">
+      <line x1="40" y1="180" x2="560" y2="180" stroke="var(--rule)" stroke-width="1"/>
+      <line x1="40" y1="67" x2="560" y2="67" stroke="var(--rule)" stroke-width="1" stroke-dasharray="4 4"/>
+      <text x="556" y="60" text-anchor="end" font-size="11" style="fill:var(--muted)">節目の6万円</text>
+      <rect x="120" y="50" width="120" height="130" rx="4" fill="var(--accent)" opacity="0.45"/>
+      <rect x="360" y="116" width="120" height="64" rx="4" fill="var(--down)"/>
+      <text x="180" y="38" text-anchor="middle" font-size="15" font-weight="700" style="fill:var(--ink)">60,920円</text>
+      <text x="420" y="104" text-anchor="middle" font-size="15" font-weight="700" style="fill:var(--down)">57,400円</text>
+      <path d="M250 60 C 300 60, 320 100, 350 112" fill="none" stroke="var(--down)" stroke-width="2" stroke-dasharray="3 3"/>
+      <text x="300" y="150" text-anchor="middle" font-size="13" font-weight="700" style="fill:var(--down)">−3,520円（−5.8%）</text>
+      <text x="180" y="202" text-anchor="middle" font-size="13">5日の清算値</text>
+      <text x="420" y="202" text-anchor="middle" font-size="13">夜間取引の終値</text>
+      <text x="420" y="220" text-anchor="middle" font-size="11" style="fill:var(--muted)">6日 6:00</text>
+    </svg>
+  </div>
+
+  <p>売られるのは、アメリカと同じく半導体・AI関連が中心になるとみています。アドバンテストや東京エレクトロンなど、AI向けの装置や検査機器をつくる会社です。一方で、自動車や銀行など、AIとの関わりが薄い業種は相対的に落ち着いているはずです。前日5日も、半導体は大きく売られながら、33業種のうち25業種が上昇しました。</p>
+  <div class="hint"><b>この便りについて</b>：6日の朝、東京市場が開く前に書いています。6日の実際の値動きは、大引け後に改めてお伝えします。</div>
+
+  <h2>下がった局面で、積立を続ける意味</h2>
+  <p>積立投資は、毎月同じ金額で買い続ける仕組みです。価格が下がると、<em>同じ金額でより多くの口数が買えます</em>。安いときに買えた分が、あとで値上がりしたときの利益のもとになります。</p>
+
+  <div class="figure" role="img" aria-label="毎月1万円の積立で、基準価額が1万円のとき1万口、9,430円のとき約1万600口、9,000円のとき約1万1,100口買える。">
+    <p class="title">同じ1万円で買える口数は、価格が下がるほど増えます</p>
+    <p class="sub">毎月1万円を積み立てる例。価格は説明のための仮の数字です。</p>
+    <svg viewBox="0 0 600 250" width="600" height="250">
+      <!-- baseline -->
+      <line x1="40" y1="200" x2="560" y2="200" stroke="var(--rule)" stroke-width="1"/>
+      <!-- bars: units 10000 / 10604 / 11111 -> heights 135 / 143 / 150 -->
+      <rect x="80"  y="65" width="110" height="135" rx="4" fill="var(--accent)" opacity="0.45"/>
+      <rect x="245" y="57" width="110" height="143" rx="4" fill="var(--accent)" opacity="0.7"/>
+      <rect x="410" y="50" width="110" height="150" rx="4" fill="var(--accent)"/>
+      <!-- units above -->
+      <text x="135" y="50" text-anchor="middle" font-size="15" font-weight="700" style="fill:var(--ink)">10,000口</text>
+      <text x="300" y="42" text-anchor="middle" font-size="15" font-weight="700" style="fill:var(--ink)">約10,600口</text>
+      <text x="465" y="35" text-anchor="middle" font-size="15" font-weight="700" style="fill:var(--ink)">約11,100口</text>
+      <text x="300" y="24" text-anchor="middle" font-size="12">6%多く買える</text>
+      <text x="465" y="17" text-anchor="middle" font-size="12">11%多く買える</text>
+      <!-- prices below -->
+      <text x="135" y="224" text-anchor="middle" font-size="13">価格 10,000円</text>
+      <text x="300" y="224" text-anchor="middle" font-size="13">価格 9,430円</text>
+      <text x="465" y="224" text-anchor="middle" font-size="13">価格 9,000円</text>
+      <text x="135" y="242" text-anchor="middle" font-size="11" style="fill:var(--muted)">下落前</text>
+      <text x="300" y="242" text-anchor="middle" font-size="11" style="fill:var(--muted)">5.7%下落（今回のナスダック相当）</text>
+      <text x="465" y="242" text-anchor="middle" font-size="11" style="fill:var(--muted)">10%下落</text>
+    </svg>
+  </div>
+
+  <p>相場は上がったり下がったりを繰り返します。たとえば2025年4月にも関税問題で株価が大きく下がりましたが、その後回復し、今年10月には最高値を更新していました。下がったときに売ってしまうと、こうした戻りを取り逃がします。下がったときも買い続けた人は、戻りの恩恵を受けられます。</p>
+
+  <div class="figure" role="img" aria-label="急落と回復のイメージ図。株価が急落したあと回復する線と、急落中も積立を続けた人が安く買えた期間を示す。">
+    <p class="title">急落と回復のイメージ</p>
+    <p class="sub">説明のためのイメージ図で、実際の値動きではありません。</p>
+    <svg viewBox="0 0 600 230" width="600" height="230">
+      <!-- shaded: cheap buying period -->
+      <rect x="235" y="30" width="140" height="160" fill="var(--accent-soft)"/>
+      <text x="305" y="206" text-anchor="middle" font-size="12" style="fill:var(--accent)" font-weight="700">積立を続けた人が安く買えた期間</text>
+      <!-- pre-drop level -->
+      <line x1="40" y1="78" x2="560" y2="78" stroke="var(--rule)" stroke-width="1" stroke-dasharray="4 4"/>
+      <text x="44" y="70" font-size="11" style="fill:var(--muted)">下落前の水準</text>
+      <!-- price line -->
+      <path d="M40 120 C 110 115, 160 95, 215 78 C 240 70, 255 100, 275 140 C 290 168, 300 165, 320 150 C 360 120, 400 85, 450 72 C 500 60, 530 52, 560 45" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- markers -->
+      <circle cx="295" cy="160" r="5" fill="var(--down)"/>
+      <text x="295" y="185" text-anchor="middle" font-size="13" font-weight="700" style="fill:var(--down)">急落</text>
+      <circle cx="560" cy="45" r="5" fill="var(--up)"/>
+      <text x="540" y="38" text-anchor="end" font-size="13" font-weight="700" style="fill:var(--up)">回復</text>
+      <!-- axis -->
+      <line x1="40" y1="190" x2="560" y2="190" stroke="var(--rule)" stroke-width="1"/>
+      <text x="40" y="222" font-size="11" style="fill:var(--muted)">時間 →</text>
+    </svg>
+  </div>
+
+  <section class="faq">
+    <h2>よくあるご質問</h2>
+    <div class="qa">
+      <div>
+        <p class="q">毎月の積立は、やめたほうがいいですか？</p>
+        <p class="a"><b>いつも通り続けていただくことをおすすめします。</b>上の図のとおり、価格が下がっている時期は、同じ金額でより多くの口数を買える時期です。下がったからといって積立をやめると、その後の回復の恩恵を受け損ねてしまいます。</p>
+      </div>
+      <div>
+        <p class="q">S&amp;P500型や全世界株式型の投資信託を持っています。どのくらい下がりますか？</p>
+        <p class="a">S&amp;P500型は、指数そのものがこの日4.4%下げているので、<b>基準価額もそれに近い下落</b>を反映します。上位にハイテク大手が並ぶ指数なので、「分散しているから軽い」とまでは言えません。全世界株式型は米国以外にも広がっている分、下げは幾分小さくなります。いずれも半導体の個別株のような10%の下げにはなりませんが、数%の値下がりは見込んでおいてください。</p>
+      </div>
+      <div>
+        <p class="q">今のうちに売って、落ち着いてから買い直したほうがいいですか？</p>
+        <p class="a"><b>おすすめしません。</b>「いつ売るか」「いつ買い直すか」を当て続けるのは、プロでも難しいことです。急落のあとは戻りも急なことが多く、売っている間に戻ってしまうと、安く買い直す機会はなくなります。相場に合わせて売り買いするより、持ち続けて積み立てを続けるほうが、結果として効率がよいと考えています。</p>
+      </div>
+      <div>
+        <p class="q">住宅ローンには関係がありますか？</p>
+        <p class="a">少しあります。株が売られる局面では、安全とされる国債が買われ、<b>長期金利が下がりやすく</b>なります。長期金利は固定型の住宅ローン金利のもとになるため、固定金利の見直しを考えている方は、今後数週間の動きを見ておく価値があります。なお10年国債の利回りは11月4日時点で2.855%でした。</p>
+      </div>
+      <div>
+        <p class="q">何かしておくことはありますか？</p>
+        <p class="a">一つだけ。<b>ご自身の資産のうち、「アメリカのハイテク株」や「半導体株」に絞った商品がどのくらいの割合か</b>を確認してみてください。今回の下落を直接受けているのはその部分です。下のチェックが目安になります。</p>
+        <ul class="check">
+          <li>お持ちの投資信託の名前に「米国」「NASDAQ」「ハイテク」「半導体」「テクノロジー」のいずれかが入っている</li>
+          <li>個別株で、半導体やAIに関わる会社の株を持っている</li>
+          <li>それらを合計すると、資産全体の3割を超えている</li>
+        </ul>
+        <p class="a check-note">2つ以上当てはまる方は、今回の下落を大きく受けている可能性があります。売る必要はありませんが、配分を見直す時期かもしれません。</p>
+      </div>
+    </div>
+  </section>
+
+  <h2>これから注目する日</h2>
+  <ul class="watch">
+    <li><span class="when">11月6日</span><span>東京市場の動き。先物が示す5万7,000円台まで下げるのか、「安いから買おう」という動きが入るのか。大引け後に改めてお伝えします。</span></li>
+    <li><span class="when">11月中旬</span><span>エヌビディアの決算発表。AI向けの半導体が引き続き売れているかどうかがわかる、いちばん大きな材料です。</span></li>
+    <li><span class="when">12月9日</span><span>アメリカの中央銀行（FRB）の会合。これまでは「金利を上げるのでは」という見方が強かったのですが、株安が続けば見方が変わるかもしれません。</span></li>
+    <li><span class="when">随時</span><span>民主党のデータセンター政策の中身。「公約」で終わるのか、実際に法律として動き出すのかで、市場の受け止めは変わります。</span></li>
+  </ul>
+  <p style="margin-top:18px">相場が大きく動く日ほど、急いで決めないことが肝心です。</p>
+
+  <section class="author">
+    <div class="author-head">
+      <div class="author-mark" aria-hidden="true"></div>
+      <div>
+        <p class="author-name"><span class="ph">［お名前］</span></p>
+        <p class="author-role">ファイナンシャルプランナー ／ <span class="ph">［資格・所属など］</span></p>
+      </div>
+    </div>
+    <p>相場に合わせて売ったり買ったりするのではなく、長く続けられる積み立ての形を一緒に考えることを仕事にしています。<span class="ph">［ひとこと：得意分野や普段のお客様像など、2行程度］</span></p>
+  </section>
+
+  <section class="cta">
+    <h2>次に相場が大きく動いたときも、このレターをお届けします</h2>
+    <p>登録は無料で、配信の停止はいつでもできます。商品のご案内や営業のご連絡はいたしません。</p>
+    <p class="cta-link">登録はこちら：<span class="ph">［LINE公式アカウント または 登録ページのURL］</span></p>
+    <p class="cta-sub">ご自身の資産の配分について個別に相談したい方は、30分の無料相談（オンライン）もご利用いただけます。<span class="ph">［予約ページのURL または 連絡先］</span></p>
+  </section>
+
+  <section class="glossary">
+    <h2>用語の解説</h2>
+    <dl>
+      <div class="item"><dt>半導体</dt><dd>コンピュータの「頭脳」にあたる部品。AIを動かすのに大量に必要で、エヌビディア、AMD、日本ではアドバンテストや東京エレクトロンが関連企業です。</dd></div>
+      <div class="item"><dt>データセンター</dt><dd>AIを動かすための巨大なコンピュータ施設。大量の電気と水を使うため、地域によっては建設への反対が強まっています。</dd></div>
+      <div class="item"><dt>先物（さきもの）</dt><dd>「将来の値段」を今から取引する仕組み。夜間も取引されるため、翌日の株価の予想のように使われます。</dd></div>
+      <div class="item"><dt>中間選挙</dt><dd>アメリカの大統領任期の中間に行われる議会の選挙。今回は野党の民主党が上院・下院の両方で多数派になりました。</dd></div>
+      <div class="item"><dt>調整局面</dt><dd>株価が直近の高値から10%以上下がった状態を指す言葉。ナスダックは10月の最高値からすでに10%以上下がっています。</dd></div>
+      <div class="item"><dt>FRB</dt><dd>アメリカの中央銀行。日本の日本銀行にあたり、金利を上げ下げして景気や物価を調整します。</dd></div>
+    </dl>
+  </section>
+
+  </div><!-- /#more -->
+
+  <footer class="colophon">
+    <h3>出典</h3>
+    <ul>
+      <li>日本経済新聞「米ナスダック一時5%急落、ハイテク株総崩れ　NYダウも1700ドル安」2026年11月6日 0:25配信 <a href="https://www.nikkei.com/article/DGXZQOGN05C660V01C26A1000000/">nikkei.com</a>（有料記事）</li>
+      <li>日本経済新聞「日経平均先物が急落、6万円割れ　米半導体株安が波及」2026年11月6日 0:31配信 <a href="https://www.nikkei.com/article/DGXZQOGN05C720V01C26A1000000/">nikkei.com</a>（有料記事）</li>
+      <li>CNBC、Yahoo Finance（アメリカ市場の終値）、日本経済新聞マーケットデータ（日経平均先物、11月6日6:00時点）、読売新聞、株探、CNN、JETRO の11月5日付報道（個別銘柄の動き、中間選挙の結果と政策の見方）</li>
+    </ul>
+    <p class="disc">本レターは情報提供を目的として作成したもので、特定の金融商品の売買を勧誘するものではありません。数値は11月6日早朝時点の報道にもとづく概算を含みます。投資の最終判断はご自身でお願いいたします。</p>
+  </footer>
+
+</div>
+<script>
+(function () {
+  var more = document.getElementById('more');
+  var gate = document.getElementById('more-gate');
+  var btn = document.getElementById('more-btn');
+  if (!more || !gate || !btn) return;
+  function open() { more.hidden = false; gate.hidden = true; }
+  if (location.hash === '#more') { open(); } else { more.hidden = true; }
+  btn.addEventListener('click', function () {
+    open();
+    more.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+})();
+</script>
+</body>
+</html>

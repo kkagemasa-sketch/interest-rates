@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>フォローニュース 2026年11月6日号</title>
+<title>IFA登録者専用フォローメッセージ 2026年11月6日号</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -62,6 +62,7 @@ svg text { font-family: var(--font-body); fill: var(--ink-2); }
   border-bottom: 2px solid var(--accent);
 }
 .masthead .brand { font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; letter-spacing: 0.08em; color: var(--accent); }
+.masthead .tag { display: inline-block; font-family: var(--font-body); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; background: var(--accent); color: var(--paper); padding: 3px 9px; margin-right: 10px; vertical-align: 2px; border-radius: 2px; }
 .masthead .issue { font-size: 0.82rem; color: var(--muted); letter-spacing: 0.04em; font-variant-numeric: tabular-nums; }
 
 /* 見出し */
@@ -74,6 +75,29 @@ svg text { font-family: var(--font-body); fill: var(--ink-2); }
 .headline .deck { margin: 14px 0 0; font-size: 1.02rem; color: var(--ink-2); line-height: 1.8; }
 .lead { margin: 22px 0 0; font-size: 1.02rem; }
 
+/* 要点（ここだけで完結） */
+.brief { margin: 24px 0 0; padding: 22px 24px 18px; background: var(--card); border: 2px solid var(--accent); }
+.brief h2 { margin: 0 0 12px; border: 0; padding: 0; font-size: 1.15rem; }
+.brief dl { margin: 0; display: grid; gap: 10px; }
+.brief .row { display: grid; grid-template-columns: 7.5em 1fr; gap: 12px; align-items: start; min-width: 0; }
+.brief dt { font-weight: 700; color: var(--accent); font-size: 0.92rem; padding-top: 0.15em; }
+.brief dd { margin: 0; }
+.brief .verdict { margin: 16px 0 0; padding: 12px 16px; background: var(--accent-soft); font-weight: 700; line-height: 1.8; }
+.brief .stance-line { margin: 12px 0 0; font-size: 0.92rem; color: var(--ink-2); }
+.brief h2 + .stance-line { margin: 0 0 12px; }
+.brief .close { margin: 10px 0 0; font-size: 0.92rem; color: var(--ink-2); }
+.brief .close .ph { font-weight: 700; }
+.brief .sign { margin: 12px 0 0; text-align: right; font-weight: 700; font-size: 0.95rem; }
+/* 差し替え箇所の目印（送付前に実際の内容に置き換える） */
+.ph { outline: 1.5px dashed var(--up); outline-offset: 1px; color: var(--up); padding: 0 3px; }
+/* 続きを読む */
+.gate { margin: 28px 0 0; padding: 22px 20px; text-align: center; border-top: 1px dashed var(--rule); border-bottom: 1px dashed var(--rule); }
+.gate p { margin: 0 0 10px; color: var(--ink-2); font-size: 0.95rem; }
+.gate .sub { font-size: 0.8rem; color: var(--muted); margin: 8px 0 0; }
+.gate button { font: inherit; font-weight: 700; font-size: 0.98rem; padding: 12px 26px; border: 2px solid var(--accent); background: var(--accent); color: var(--paper); border-radius: 999px; cursor: pointer; }
+.gate button:hover { background: var(--accent-soft); color: var(--accent); }
+.gate button:focus-visible { outline: 3px solid var(--accent-soft); outline-offset: 2px; }
+.more-head { margin: 32px 0 0; font-size: 0.8rem; letter-spacing: 0.12em; color: var(--muted); text-align: center; }
 /* スタンス */
 .stance { margin: 26px 0 0; padding: 20px 22px; background: var(--card); border: 1px solid var(--rule); border-left: 4px solid var(--accent); }
 .stance h2 { margin: 0 0 8px; border: 0; padding: 0; font-size: 1.1rem; }
@@ -176,6 +200,7 @@ em { font-style: normal; font-weight: 700; background: linear-gradient(transpare
 /* 注目点 */
 .watch { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
 .watch li { display: grid; grid-template-columns: 6.2em 1fr; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--rule); min-width: 0; }
+.forward { padding: 12px 16px; background: var(--card); border: 1px dashed var(--rule); font-size: 0.92rem; color: var(--ink-2); }
 .watch .when { font-size: 0.82rem; color: var(--accent); font-weight: 700; font-variant-numeric: tabular-nums; }
 
 /* 奥付 */
@@ -197,12 +222,16 @@ em { font-style: normal; font-weight: 700; background: linear-gradient(transpare
   .waffle-wrap { grid-template-columns: 1fr; }
   .waffle-nums { grid-template-columns: 1fr 1fr; }
   .faq { padding: 18px 18px 6px; }
+  .brief { padding: 16px 16px 14px; }
+  .brief .row { grid-template-columns: 1fr; gap: 2px; }
   .points, .stance { padding: 16px 16px; }
 }
 @media print {
+  #more { display: block !important; }
+  #more-gate { display: none !important; }
   body { background: #fff; color: #000; padding: 0; font-size: 11pt; }
   .sheet { max-width: none; }
-  .points, .figures, .figure, .faq, .glossary, .flow, .stance { break-inside: avoid; }
+  .brief, .points, .figures, .figure, .glossary, .flow, .stance { break-inside: avoid; }
   .colophon a { text-decoration: none; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
@@ -212,48 +241,62 @@ em { font-style: normal; font-weight: 700; background: linear-gradient(transpare
 <div class="sheet">
 
   <header class="masthead">
-    <div class="brand">お客様向け フォローニュース</div>
+    <div class="brand"><span class="tag">IFA登録者専用</span>フォローメッセージ</div>
     <div class="issue">2026年11月6日号</div>
   </header>
 
   <div class="headline">
     <p class="kicker">アメリカの株式市場 ｜ 速報</p>
     <h1>アメリカのハイテク株が大きく下がりました</h1>
-    <p class="deck">何が起きたのか、ご自身の資産にどう関係するのかをまとめました。結論から言うと、いつも通り積立を続けていただければ大丈夫です。</p>
+    <p class="deck">何が起き、お持ちの資産にどう関わるのか。要点は冒頭にまとめました。背景まで知りたい方は、続きをご覧ください。</p>
   </div>
 
-  <p class="lead">日本時間の11月6日未明、アメリカの株式市場で株価が大きく下がりました。日本経済新聞によると、ハイテク企業が多く集まる「ナスダック」という指数は、一時5.7%の下落。有名な「NYダウ」も一時1,700ドル下がりました。売られたのは主に、半導体やAI（人工知能）に関わる会社の株です。</p>
+
+  <section class="brief">
+    <h2>要点</h2>
+    <dl>
+      <div class="row"><dt>何が起きたか</dt><dd>アメリカで、AI・半導体関連の株が一斉に売られました。ハイテク株の多いナスダックは5.5%安（一時5.7%安）。きっかけは中間選挙で、AI向けの大型施設の建設に歯止めがかかるのではという警戒が広がりました。</dd></div>
+      <div class="row"><dt>日本への影響</dt><dd>日本株は6日が本番です。夜間の先物は5万7,400円（5.8%安）で引け、6日の東京市場は6万円を大きく割り込んで始まる見込みです。下げの中心は、ここでも半導体関連とみています。</dd></div>
+      <div class="row"><dt>どうすればよいか</dt><dd>特別な対応は必要ありません。積立はこれまで通り続けるのが得策です。価格が下がった局面は、同じ金額でより多くの口数を買える時期でもあります。</dd></div>
+    </dl>
+    <p class="verdict">結論：売り急ぐ理由はありません。積立はこれまで通りで大丈夫です。</p>
+    <p class="stance-line">相場の浮き沈みにかかわらず、長く積み立てを続けること。それが私の基本的な考えです。この便りは、不安を煽るためではなく、安心して持ち続けていただくためのものです。</p>
+    <p class="close">お忙しい方は、ここまでで十分です。相場が荒れた日には、担当としてこうして一言お届けするようにしています。気になることがあれば、返信でもお電話でも、どうぞお気軽に。</p>
+    <p class="sign">担当IFA　鎌倉景政</p>
+  </section>
+
+  <div class="gate" id="more-gate">
+    <p>ここから先は、背景を知りたい方へ。</p>
+    <button type="button" id="more-btn">続きを読む</button>
+    <p class="sub">背景と図解。5分ほどでお読みいただけます。</p>
+  </div>
+
+  <div id="more">
+  <p class="more-head">くわしい解説</p>
+  <p class="lead">日本時間の11月6日未明、アメリカの株式市場で株価が大きく下がりました。日本経済新聞によると、ハイテク企業が多く集まる「ナスダック」という指数は、一時5.7%安まで売られ、終値でも5.5%の下落。「NYダウ」も1,800ドル前後の下げで取引を終えました。売られたのは主に、半導体やAI（人工知能）に関わる会社の株です。</p>
 
   <section class="stance">
     <h2>このニュースをお届けする理由</h2>
-    <p>私の基本的な考えは、<strong>相場の上げ下げに関係なく、長期で積み立てを続けていただくこと</strong>です。相場を見て売ったり買ったりするのは、手間がかかるわりに結果が伴いにくい、非効率な方法だと考えています。</p>
-    <p>それでもこうしたニュースをお届けするのは、不安を煽るためではありません。<strong>何が起きているかを知ったうえで、安心して持ち続けていただくため</strong>です。ニュースで大きな数字を目にしたとき、「ああ、あの話か」と落ち着いて受け止めていただければ、この号の役目は果たせたことになります。</p>
+    <p><strong>相場の浮き沈みにかかわらず、長く積み立てを続けること。</strong>それが私の基本的な考えです。相場を見て売り買いを繰り返すのは、手間のわりに報われにくい方法だと思っています。</p>
+    <p>それでもこうした便りを書くのは、不安を煽るためではありません。<strong>何が起きているかを知ったうえで、安心して持ち続けていただくため</strong>です。大きな数字が報じられたとき、「あの話か」と静かに受け止めていただければ、この便りの役目は果たせています。</p>
   </section>
 
-  <section class="points">
-    <h2>今回のポイント</h2>
-    <ol>
-      <li><b>下がったのは「AI・半導体」の会社の株です。</b>この1年、株価を押し上げてきた人気グループに、まとめて売りが出ました。</li>
-      <li><b>きっかけはアメリカの選挙です。</b>野党の民主党が勝ち、AI向けの巨大なコンピュータ施設（データセンター）が「作りにくくなるかもしれない」と心配されました。</li>
-      <li><b>日本の株も影響を受けています。</b>ただし下がっているのは主に半導体関連の会社で、日本の市場全体が落ち込んでいるわけではありません。</li>
-    </ol>
-  </section>
 
   <div class="figures">
     <div class="tile">
-      <p class="label">ナスダック（一時）</p>
-      <p class="value">−5.7<small>%</small></p>
-      <p class="note">100万円が約94万円になる下げ幅。10月につけた最高値からは10%以上下がりました。</p>
+      <p class="label">ナスダック（終値）</p>
+      <p class="value">−5.5<small>%</small></p>
+      <p class="note">一時は5.7%安。100万円が約94万円になる下げ幅で、10月の最高値からは10%以上下がりました。</p>
     </div>
     <div class="tile">
-      <p class="label">NYダウ（一時）</p>
-      <p class="value">−1,700<small>ドル</small></p>
-      <p class="note">率にすると約3%。前の日に大きく上がった分を打ち消しました。</p>
+      <p class="label">NYダウ（終値）</p>
+      <p class="value">−1,800<small>ドル前後</small></p>
+      <p class="note">率にすると3%強。前の日に大きく上がった分を打ち消しました。</p>
     </div>
     <div class="tile">
-      <p class="label">日経平均先物（夜間の取引）</p>
-      <p class="value">6万円割れ</p>
-      <p class="note">一時5万8,000円台半ばまで下落。6日の東京市場は安く始まりそうです。</p>
+      <p class="label">日経平均先物（夜間取引の終値）</p>
+      <p class="value">57,400<small>円</small></p>
+      <p class="note">前日比3,520円安（5.8%安）。6日の東京市場の目安になる水準です。</p>
     </div>
   </div>
 
@@ -261,19 +304,19 @@ em { font-style: normal; font-weight: 700; background: linear-gradient(transpare
   <p>ニュースに出てくる「ナスダック」「NYダウ」「日経平均」は、どれも<em>たくさんの会社の株価をまとめた「平均点」</em>のようなものです。今回は、その平均点が下がりました。</p>
   <div class="hint"><b>ナスダック</b>：アップルやエヌビディアなど、ハイテク企業が多く入っているアメリカの指数。<b>NYダウ</b>：アメリカを代表する大企業30社の指数。<b>S&amp;P500</b>：アメリカの主要500社の指数。投資信託でよく使われます。<b>日経平均</b>：日本を代表する225社の指数。</div>
 
-  <div class="figure chart" role="img" aria-label="11月5日の主な株価指数の下落率。半導体の会社の指数が約10%安、ナスダックが一時5.7%安、S&P500が約3.9%安、NYダウが約3.2%安、日経平均が1.8%安。">
-    <p class="title">どのくらい下がったのか（11月5日）</p>
-    <p class="sub">棒が長いほど大きく下がっています。アメリカ分は取引の途中の数字で、最終的な数字は変わる可能性があります。</p>
+  <div class="figure chart" role="img" aria-label="11月5日の主な株価指数の下落率（終値）。半導体の会社の指数が約10%安、ナスダックが5.5%安、S&P500が4.4%安、NYダウが約3.4%安、日経平均先物の夜間取引が5.8%安。">
+    <p class="title">どのくらい下がったのか（11月5日の終値）</p>
+    <p class="sub">棒が長いほど大きく下がっています。アメリカは終値、日本は6日早朝に引けた先物の値です。</p>
     <div class="rows">
       <div class="row"><div class="name">半導体の会社の指数<span>アメリカ（SOX）</span></div><div class="track"><div class="bar" style="--w:100%"></div></div><div class="val">−10.0%</div></div>
-      <div class="row"><div class="name">ナスダック<span>アメリカ・ハイテク中心</span></div><div class="track"><div class="bar" style="--w:57%"></div></div><div class="val">−5.7%</div></div>
-      <div class="row"><div class="name">S&amp;P500<span>アメリカ・主要500社</span></div><div class="track"><div class="bar" style="--w:39%"></div></div><div class="val">−3.9%</div></div>
-      <div class="row"><div class="name">NYダウ<span>アメリカ・大企業30社</span></div><div class="track"><div class="bar" style="--w:32%"></div></div><div class="val">−3.2%</div></div>
-      <div class="row"><div class="name">日経平均<span>日本・5日の終値</span></div><div class="track"><div class="bar jp" style="--w:18%"></div></div><div class="val">−1.8%</div></div>
+      <div class="row"><div class="name">ナスダック<span>アメリカ・ハイテク中心</span></div><div class="track"><div class="bar" style="--w:55%"></div></div><div class="val">−5.5%</div></div>
+      <div class="row"><div class="name">S&amp;P500<span>アメリカ・主要500社</span></div><div class="track"><div class="bar" style="--w:44%"></div></div><div class="val">−4.4%</div></div>
+      <div class="row"><div class="name">NYダウ<span>アメリカ・大企業30社</span></div><div class="track"><div class="bar" style="--w:34%"></div></div><div class="val">−3.4%</div></div>
+      <div class="row"><div class="name">日経平均先物<span>日本・夜間取引の終値</span></div><div class="track"><div class="bar jp" style="--w:58%"></div></div><div class="val">−5.8%</div></div>
     </div>
-    <p class="legend"><span><i></i>アメリカ（取引途中の数字）</span><span><i class="jp"></i>日本（終値）</span></p>
+    <p class="legend"><span><i></i>アメリカ（終値）</span><span><i class="jp"></i>日本（先物の夜間終値）</span></p>
   </div>
-  <p><em>半導体の会社ほど大きく下がり、幅広い会社を含む指数ほど下げが小さい</em>ことがわかります。投資信託で多い「S&amp;P500型」や「全世界株式型」は、幅広い会社に分散しているため、半導体株のような10%の下げにはなりにくい仕組みです。</p>
+  <p>半導体の会社ほど大きく下がり、幅広い会社を含む指数ほど下げが小さい、という関係は見てとれます。ただし、投資信託で多い「S&amp;P500型」が無傷というわけではありません。<em>S&amp;P500は上位にハイテク大手が並び、IT関連だけで全体の3割前後を占める</em>ため、この日の下落率は4.4%と、ナスダックにかなり近い水準でした。「全世界株式型」は米国が6割前後で、残りが日本や欧州などに分かれている分、下げはもう少し小さくなります。加えて為替がやや円高に振れたため、円建ての基準価額はその分だけ下げ幅が広がります。半導体の個別株のような10%の下げにはなりませんが、数%の値下がりは見込んでおく必要があります。</p>
 
   <h2>なぜ下がったのか</h2>
   <p>AI（人工知能）を動かすには、「データセンター」と呼ばれる巨大なコンピュータ施設が必要です。この施設を建てるために、エヌビディアなどの半導体がとぶように売れ、関連する会社の株価は大きく上がってきました。</p>
@@ -298,26 +341,29 @@ em { font-style: normal; font-weight: 700; background: linear-gradient(transpare
   <div class="hint"><b>補足</b>：心配されているのは「AIそのものが規制される」ことではなく、「施設の建設や税金の扱い」です。AIの技術や需要がなくなったという話ではありません。</div>
 
   <h2>日本への影響は</h2>
-  <p>5日の東京市場では、日経平均が1,110円安（1.8%安）の61,077円で取引を終え、約5カ月半ぶりの安い水準になりました。下げの大半は、アドバンテストや東京エレクトロンといった半導体関連の会社によるものです。</p>
-  <p>一方で、日本の会社全体を見ると、<em>上がった業種のほうが多い</em>のが実際のところです。トヨタ自動車が業績の見通しを引き上げたことで自動車株は買われ、33ある業種のうち25業種が上昇しました。</p>
+  <p>日本株にとっては、6日が本番です。アメリカ市場の下落を受けて、夜間に取引される日経平均先物は5万7,400円で引けました。前日から3,520円低い水準で、下落率にすると5.8%です。先物は翌日の相場の目安になるため、6日の東京市場は節目の6万円を大きく割り込んで始まる見込みです。</p>
 
-  <div class="figure" role="img" aria-label="5日の東京市場では33業種のうち25業種が上昇し、8業種が下落した。">
-    <p class="title">5日の東京市場、業種ごとの明暗</p>
-    <p class="sub">1マスが1業種。日本の会社は33の業種に分けられています。</p>
-    <div class="waffle-wrap">
-      <div class="waffle" aria-hidden="true">
-        <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-        <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-        <span></span><span></span><span></span><span class="dn"></span><span class="dn"></span><span class="dn"></span><span class="dn"></span><span class="dn"></span><span class="dn"></span><span class="dn"></span><span class="dn"></span>
-      </div>
-      <div class="waffle-nums">
-        <div class="waffle-num upc">25業種<span>上昇（自動車など）</span></div>
-        <div class="waffle-num dnc">8業種<span>下落（半導体など）</span></div>
-      </div>
-    </div>
-    <p class="cap">「半導体は売られたが、それ以外は落ち着いている」というのが5日の日本市場の姿です。</p>
+  <div class="figure" role="img" aria-label="日経平均先物は前日の清算値60,920円から夜間取引で57,400円へ3,520円（5.8%）下落し、節目の60,000円を割り込んだ。">
+    <p class="title">先物が示す、6日の東京市場の目安</p>
+    <p class="sub">日経平均先物12月物。夜間取引は6日午前6時に終了しています。</p>
+    <svg viewBox="0 0 600 230" width="600" height="230">
+      <line x1="40" y1="180" x2="560" y2="180" stroke="var(--rule)" stroke-width="1"/>
+      <line x1="40" y1="67" x2="560" y2="67" stroke="var(--rule)" stroke-width="1" stroke-dasharray="4 4"/>
+      <text x="556" y="60" text-anchor="end" font-size="11" style="fill:var(--muted)">節目の6万円</text>
+      <rect x="120" y="50" width="120" height="130" rx="4" fill="var(--accent)" opacity="0.45"/>
+      <rect x="360" y="116" width="120" height="64" rx="4" fill="var(--down)"/>
+      <text x="180" y="38" text-anchor="middle" font-size="15" font-weight="700" style="fill:var(--ink)">60,920円</text>
+      <text x="420" y="104" text-anchor="middle" font-size="15" font-weight="700" style="fill:var(--down)">57,400円</text>
+      <path d="M250 60 C 300 60, 320 100, 350 112" fill="none" stroke="var(--down)" stroke-width="2" stroke-dasharray="3 3"/>
+      <text x="300" y="150" text-anchor="middle" font-size="13" font-weight="700" style="fill:var(--down)">−3,520円（−5.8%）</text>
+      <text x="180" y="202" text-anchor="middle" font-size="13">5日の清算値</text>
+      <text x="420" y="202" text-anchor="middle" font-size="13">夜間取引の終値</text>
+      <text x="420" y="220" text-anchor="middle" font-size="11" style="fill:var(--muted)">6日 6:00</text>
+    </svg>
   </div>
-  <p>ただし、夜間に取引される「日経平均先物」は6万円を大きく割り込んでいます。先物は翌日の相場の予想のような役割を持つため、6日の東京市場は安く始まる可能性が高いとみています。</p>
+
+  <p>売られるのは、アメリカと同じく半導体・AI関連が中心になるとみています。アドバンテストや東京エレクトロンなど、AI向けの装置や検査機器をつくる会社です。一方で、自動車や銀行など、AIとの関わりが薄い業種は相対的に落ち着いているはずです。前日5日も、半導体は大きく売られながら、33業種のうち25業種が上昇しました。</p>
+  <div class="hint"><b>この便りについて</b>：6日の朝、東京市場が開く前に書いています。6日の実際の値動きは、大引け後に改めてお伝えします。</div>
 
   <h2>下がった局面で、積立を続ける意味</h2>
   <p>積立投資は、毎月同じ金額で買い続ける仕組みです。価格が下がると、<em>同じ金額でより多くの口数が買えます</em>。安いときに買えた分が、あとで値上がりしたときの利益のもとになります。</p>
@@ -373,40 +419,15 @@ em { font-style: normal; font-weight: 700; background: linear-gradient(transpare
     </svg>
   </div>
 
-  <section class="faq">
-    <h2>よくあるご質問</h2>
-    <div class="qa">
-      <div>
-        <p class="q">毎月の積立は、やめたほうがいいですか？</p>
-        <p class="a"><b>いつも通り続けていただくことをおすすめします。</b>上の図のとおり、価格が下がっている時期は、同じ金額でより多くの口数を買える時期です。下がったからといって積立をやめると、その後の回復の恩恵を受け損ねてしまいます。</p>
-      </div>
-      <div>
-        <p class="q">S&amp;P500型や全世界株式型の投資信託を持っています。どのくらい下がりますか？</p>
-        <p class="a">アメリカ株の下げをある程度反映するので、<b>数%程度の値下がり</b>は見込んでおいてください。ただ、何百・何千という会社に分散しているため、半導体株のような10%の下げにはなりにくい仕組みです。</p>
-      </div>
-      <div>
-        <p class="q">今のうちに売って、落ち着いてから買い直したほうがいいですか？</p>
-        <p class="a"><b>おすすめしません。</b>「いつ売るか」「いつ買い直すか」を当て続けるのは、プロでも難しいことです。急落のあとは戻りも急なことが多く、売っている間に戻ってしまうと、安く買い直す機会はなくなります。相場に合わせて売り買いするより、持ち続けて積み立てを続けるほうが、結果として効率がよいと考えています。</p>
-      </div>
-      <div>
-        <p class="q">住宅ローンには関係がありますか？</p>
-        <p class="a">少しあります。株が売られる局面では、安全とされる国債が買われ、<b>長期金利が下がりやすく</b>なります。長期金利は固定型の住宅ローン金利のもとになるため、固定金利の見直しを考えている方は、今後数週間の動きを見ておく価値があります。なお10年国債の利回りは11月4日時点で2.855%でした。</p>
-      </div>
-      <div>
-        <p class="q">何かしておくことはありますか？</p>
-        <p class="a">一つだけ。<b>ご自身の資産のうち、「アメリカのハイテク株」や「半導体株」に絞った商品がどのくらいの割合か</b>を確認してみてください。今回の下落を直接受けているのはその部分です。割合が大きい場合は、配分を見直すよい機会でもありますので、ご相談ください。</p>
-      </div>
-    </div>
-  </section>
-
   <h2>これから注目する日</h2>
   <ul class="watch">
-    <li><span class="when">11月6日</span><span>東京市場の動き。先物が示すところまで下げるのか、「安いから買おう」という動きが入るのか。アメリカ市場の最終的な数字もこの日の朝に確定します。</span></li>
+    <li><span class="when">11月6日</span><span>東京市場の動き。先物が示す5万7,000円台まで下げるのか、「安いから買おう」という動きが入るのか。大引け後に改めてお伝えします。</span></li>
     <li><span class="when">11月中旬</span><span>エヌビディアの決算発表。AI向けの半導体が引き続き売れているかどうかがわかる、いちばん大きな材料です。</span></li>
     <li><span class="when">12月9日</span><span>アメリカの中央銀行（FRB）の会合。これまでは「金利を上げるのでは」という見方が強かったのですが、株安が続けば見方が変わるかもしれません。</span></li>
     <li><span class="when">随時</span><span>民主党のデータセンター政策の中身。「公約」で終わるのか、実際に法律として動き出すのかで、市場の受け止めは変わります。</span></li>
   </ul>
-  <p style="margin-top:18px">相場が大きく動いたときほど、判断を急がないことが大切です。ご不安な点があれば、いつでもご連絡ください。</p>
+  <p style="margin-top:18px">相場が大きく動く日ほど、急いで決めないことが肝心です。迷いが生じたときは、動く前に一度ご連絡ください。ご一緒に考えます。</p>
+  <p class="forward">この便りは担当のお客様へお送りしているものですが、ご家族やご友人への転送はご自由にどうぞ。同じニュースに心を動かされている方の、落ち着きの一助になれば幸いです。</p>
 
   <section class="glossary">
     <h2>用語の解説</h2>
@@ -420,16 +441,32 @@ em { font-style: normal; font-weight: 700; background: linear-gradient(transpare
     </dl>
   </section>
 
+  </div><!-- /#more -->
+
   <footer class="colophon">
     <h3>出典</h3>
     <ul>
       <li>日本経済新聞「米ナスダック一時5%急落、ハイテク株総崩れ　NYダウも1700ドル安」2026年11月6日 0:25配信 <a href="https://www.nikkei.com/article/DGXZQOGN05C660V01C26A1000000/">nikkei.com</a>（有料記事）</li>
       <li>日本経済新聞「日経平均先物が急落、6万円割れ　米半導体株安が波及」2026年11月6日 0:31配信 <a href="https://www.nikkei.com/article/DGXZQOGN05C720V01C26A1000000/">nikkei.com</a>（有料記事）</li>
-      <li>読売新聞、株探、CNN、CNBC、Yahoo Finance、JETRO の11月5日付報道（アメリカ市場の個別銘柄・指数の動き、中間選挙の結果と政策の見方）</li>
+      <li>CNBC、Yahoo Finance（アメリカ市場の終値）、日本経済新聞マーケットデータ（日経平均先物、11月6日6:00時点）、読売新聞、株探、CNN、JETRO の11月5日付報道（個別銘柄の動き、中間選挙の結果と政策の見方）</li>
     </ul>
-    <p class="disc">本資料は情報提供を目的として作成したもので、特定の金融商品の売買を勧誘するものではありません。アメリカ市場の数値は取引時間中の速報値を含み、確定値とは異なる場合があります。投資の最終判断はご自身でお願いいたします。</p>
+    <p class="disc">本資料は情報提供を目的として作成したもので、特定の金融商品の売買を勧誘するものではありません。数値は11月6日早朝時点の報道にもとづく概算を含みます。投資の最終判断はご自身でお願いいたします。</p>
   </footer>
 
 </div>
+<script>
+(function () {
+  var more = document.getElementById('more');
+  var gate = document.getElementById('more-gate');
+  var btn = document.getElementById('more-btn');
+  if (!more || !gate || !btn) return;
+  function open() { more.hidden = false; gate.hidden = true; }
+  if (location.hash === '#more') { open(); } else { more.hidden = true; }
+  btn.addEventListener('click', function () {
+    open();
+    more.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+})();
+</script>
 </body>
 </html>
