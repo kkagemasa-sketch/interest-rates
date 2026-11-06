@@ -306,6 +306,10 @@ em { font-style: normal; font-weight: 700; background: linear-gradient(transpare
 .consult h2 { margin-top: 0; border: 0; padding-left: 0; }
 .consult ul { margin: 0 0 14px; }
 .consult .btn { margin: 4px 0 8px; }
+.consult .reply { margin: 14px 0 12px; padding: 16px 18px; background: var(--card); border: 2px solid var(--accent); }
+.consult .reply-title { margin: 0 0 6px; font-size: 0.78rem; letter-spacing: 0.1em; color: var(--accent); font-weight: 700; }
+.consult .reply p:last-child { margin: 0; }
+.consult .reply b { color: var(--accent); }
 .consult .how, .consult .note { font-size: 0.82rem; color: var(--muted); margin: 0 0 4px; }
 </style>
 </head>
@@ -419,9 +423,10 @@ em { font-style: normal; font-weight: 700; background: linear-gradient(transpare
       <li>次に大きく下がった日に、何をするか（しないか）の方針</li>
       <li>指数と違う動きをする運用を組み合わせるか、ご自身の目的に合うか</li>
     </ul>
-    <p>お持ちの商品名をLINEで送っていただければ、相談の前に中身を確認してお返しします。これから始める方は「はじめたい」とだけお送りください。</p>
-    <a class="btn" href="#line">LINEで相談を申し込む</a>
-    <p class="how">リンク先：<span class="ph">［LINE公式アカウントのURL］</span></p>
+    <div class="reply">
+      <p class="reply-title">申し込み方法</p>
+      <p>このレターが届いたLINEのトークに、<b>お持ちの投資信託の商品名</b>を返信してください。相談の前に中身を確認してお返しします。これから始める方は、<b>「はじめたい」</b>の一言で結構です。</p>
+    </div>
     <p class="note">商品の勧誘はしません。口座を移す必要もありません。送っていただいた内容は、返信とご相談のためにのみ使います。</p>
   </section>
 
