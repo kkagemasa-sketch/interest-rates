@@ -232,6 +232,8 @@ em { font-style: normal; font-weight: 700; background: linear-gradient(transpare
   body { background: #fff; color: #000; padding: 0; font-size: 11pt; }
   .sheet { max-width: none; }
   .brief, .points, .figures, .figure, .glossary, .flow, .stance { break-inside: avoid; }
+  h2 { break-after: avoid; }
+  .figure + p, .hint { break-before: avoid; }
   .colophon a { text-decoration: none; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
