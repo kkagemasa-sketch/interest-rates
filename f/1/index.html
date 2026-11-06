@@ -72,6 +72,8 @@ svg text { font-family: var(--font-body); fill: var(--ink-2); }
   font-family: var(--font-display); font-weight: 700; font-size: clamp(1.55rem, 4.6vw, 2.1rem);
   line-height: 1.45; margin: 0; text-wrap: balance; letter-spacing: 0.01em;
 }
+.nb { white-space: nowrap; }
+.sp { display: none; }
 .headline .deck { margin: 14px 0 0; font-size: 1.02rem; color: var(--ink-2); line-height: 1.8; }
 .lead { margin: 22px 0 0; font-size: 1.02rem; }
 
@@ -213,6 +215,8 @@ em { font-style: normal; font-weight: 700; background: linear-gradient(transpare
 
 @media (max-width: 600px) {
   body { font-size: 15.5px; }
+  .sp { display: inline; }
+  .headline h1 { font-size: 1.38rem; letter-spacing: 0; }
   .figures { grid-template-columns: 1fr; }
   .chart .row { grid-template-columns: 7.5em 1fr 3.8em; gap: 8px; }
   .flow { grid-template-columns: 1fr; }
@@ -249,7 +253,7 @@ em { font-style: normal; font-weight: 700; background: linear-gradient(transpare
 
   <div class="headline">
     <p class="kicker">アメリカの株式市場 ｜ 速報</p>
-    <h1>アメリカのハイテク株が急落、日経平均も6万円を割り込みました</h1>
+    <h1>アメリカのハイテク株が急落、<br class="sp">日経平均も6万円を割り込みました</h1>
     <p class="deck">何が起き、お持ちの資産にどう関わるのか。要点は冒頭にまとめました。背景まで知りたい方は、続きをご覧ください。</p>
   </div>
 
@@ -257,8 +261,8 @@ em { font-style: normal; font-weight: 700; background: linear-gradient(transpare
   <section class="brief">
     <h2>要点</h2>
     <dl>
-      <div class="row"><dt>何が起きたか</dt><dd>アメリカで、AI・半導体関連の株が一斉に売られました。ハイテク株の多いナスダックは5.5%安（一時5.7%安）。きっかけは中間選挙で、AI向けの大型施設の建設に歯止めがかかるのではという警戒が広がりました。</dd></div>
-      <div class="row"><dt>日本への影響</dt><dd>6日の東京市場は、日経平均が取引開始から急落し、一時4,000円を超える下げで節目の6万円を割り込みました（午前9時半すぎで5.6%安）。前日と違って売りは半導体以外にも広がり、TOPIXも5%近い下げです。</dd></div>
+      <div class="row"><dt>何が起きたか</dt><dd>アメリカで、AI・半導体関連の株が一斉に売られました。ハイテク株の多いナスダックは5.5%安（<span class="nb">一時5.7%安</span>）。きっかけは中間選挙で、AI向けの大型施設の建設に歯止めがかかるのではという警戒が広がりました。</dd></div>
+      <div class="row"><dt>日本への影響</dt><dd>6日の東京市場は、日経平均が取引開始から急落し、<span class="nb">一時4,000円</span>を超える下げで節目の6万円を割り込みました（午前9時半すぎで5.6%安）。前日と違って売りは半導体以外にも広がり、TOPIXも5%近い下げです。</dd></div>
       <div class="row"><dt>どうすればよいか</dt><dd>特別な対応は必要ありません。積立はこれまで通り続けるのが得策です。価格が下がった局面は、同じ金額でより多くの口数を買える時期でもあります。</dd></div>
     </dl>
     <p class="verdict">結論：売り急ぐ理由はありません。積立はこれまで通りで大丈夫です。</p>
@@ -288,7 +292,7 @@ em { font-style: normal; font-weight: 700; background: linear-gradient(transpare
     <div class="tile">
       <p class="label">ナスダック（終値）</p>
       <p class="value">−5.5<small>%</small></p>
-      <p class="note">一時は5.7%安。100万円が約94万円になる下げ幅で、10月の最高値からは10%以上下がりました。</p>
+      <p class="note">一時は5.7%安。<span class="nb">100万円</span>が約94万円になる下げ幅で、10月の最高値からは10%以上下がりました。</p>
     </div>
     <div class="tile">
       <p class="label">NYダウ（終値）</p>
@@ -298,7 +302,7 @@ em { font-style: normal; font-weight: 700; background: linear-gradient(transpare
     <div class="tile">
       <p class="label">日経平均（6日 9:36時点）</p>
       <p class="value">−5.6<small>%</small></p>
-      <p class="note">5万7,662円。一時4,107円安の5万6,971円まで下げ、7カ月ぶりに5万8,000円を割り込みました。</p>
+      <p class="note"><span class="nb">5万7,662円</span>。<span class="nb">一時4,107円安</span>の5万6,<span class="nb">971円</span>まで下げ、7カ月ぶりに5万8,<span class="nb">000円</span>を割り込みました。</p>
     </div>
   </div>
 
